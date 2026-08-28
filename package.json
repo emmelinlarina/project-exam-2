@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev": "tailwindcss build -i ./css/styles.css -o ./css/tailwind.css --watch",
+    "build": "tailwindcss build -i ./css/styles.css -o ./css/tailwind.css --minify"
+  },
   "dependencies": {
     "@tailwindcss/cli": "^4.3.3",
     "tailwindcss": "^4.3.3"
