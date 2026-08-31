@@ -7,11 +7,16 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --text-4xl: 2.25rem;
-    --text-4xl--line-height: calc(2.5 / 2.25);
-    --font-weight-bold: 700;
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --spacing: 0.25rem;
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --font-body: "Mukta", sans-serif;
+    --font-logo: "Gasoek One", sans-serif;
+    --color-primary: #3c625d;
   }
 }
 @layer base {
@@ -162,4 +167,66 @@
     display: none !important;
   }
 }
-@layer utilities;
+@layer utilities {
+  .block {
+    display: block;
+  }
+  .flex {
+    display: flex;
+  }
+  .hidden {
+    display: none;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .px-4 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  .font-logo {
+    font-family: var(--font-logo);
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+  .text-white {
+    color: var(--color-white);
+  }
+  @media (width >= 48rem) {
+    .md\:flex {
+      display: flex;
+    }
+    .md\:hidden {
+      display: none;
+    }
+    .md\:items-center {
+      align-items: center;
+    }
+    .md\:gap-6 {
+      gap: calc(var(--spacing) * 6);
+    }
+  }
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+.font-logo {
+  letter-spacing: 0.05em;
+}
