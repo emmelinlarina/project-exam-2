@@ -15,7 +15,7 @@ export function renderPopularStays(venues) {
     id="popular-carousel"
     class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-12 pb-4"
     >
-      ${popularVenues.map((venue) => createVenueCard(venue)).join("")}
+      ${popularVenues.map((venue) => createVenueCard(venue, "featured")).join("")}
     </div>
 
     <a href="#venue-list"

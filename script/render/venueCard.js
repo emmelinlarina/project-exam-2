@@ -8,12 +8,19 @@ export function createVenueCard(venue, variant = "standard") {
 
 function createFeaturedCard(venue) {
   return /*html*/ `
-    <article class="h-75 w-60 shrink-0 snap-center overflow-hidden rounded-3xl border border-accent-brown bg-white">
-      <div class="h-52 bg-gray-light"></div>
-      <div class="p-3">
-        <h2 class="font-body font-semibold text-sm text-black">${venue.name}</h2>
+    <article class="flex flex-col h-75 w-60 shrink-0 snap-center overflow-hidden rounded-3xl border border-accent-brown bg-white">
+      <div class="h-52 bg-gray-light shrink-0"></div>
+
+      <div class="p-3 flex flex-col flex-1">
+        <h2 class="font-body font-semibold text-sm text-black line-clamp-2"
+        >
+        ${venue.name}
+      </h2>
         
-        <p class="mt-1 text-xs text-secondary font-bold">${venue.price} $ / night</p>
+        <p class="mt-auto text-xs text-secondary font-bold"
+        >
+        ${venue.price} $ / night
+      </p>
       </div>
     </article>
   `;
@@ -25,11 +32,19 @@ function createStandardCard(venue) {
       <div class="h-32 bg-gray-light"></div>
 
       <div class="p-2">
-        <h2 class="font-body font-semibold text-sm text-black">${venue.name}</h2>
-    <p class="mt-1 text-xs text-black font-bold">
-                Reviews
-            </p>
-        <p class="mt-1 text-xs text-secondary font-bold">${venue.price} $ / night</p>
+        <h2 class="font-body font-semibold text-sm text-black line-clamp-2"
+        >${venue.name}
+      </h2>
+
+        <p class="mt-1 text-xs text-black font-bold"
+        >
+          Reviews
+        </p>
+
+        <p class="mt-1 text-xs text-secondary font-bold"
+        >
+        ${venue.price} $ / night
+      </p>
 
       </div>
     </article>
