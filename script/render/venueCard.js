@@ -7,9 +7,21 @@ export function createVenueCard(venue, variant = "standard") {
 }
 
 function createFeaturedCard(venue) {
+  const imageUrl = venue.media?.[0]?.url;
+  const imageAlt = venue.media?.[0]?.alt || venue.name;
+
   return /*html*/ `
     <article class="flex flex-col h-75 w-60 shrink-0 snap-center overflow-hidden rounded-3xl border border-accent-brown bg-white">
-      <div class="h-52 bg-gray-light shrink-0"></div>
+      
+    ${
+      imageUrl
+        ? `<img 
+      src="${imageUrl}" 
+      alt="${imageAlt}" 
+      class="h-52 w-full object-cover shrink-0">
+      `
+        : `<div class="h-52 w-full object-cover shrink-0"></div>`
+    }
 
       <div class="p-3 flex flex-col flex-1">
         <h2 class="font-body font-semibold text-sm text-black line-clamp-2"
@@ -27,9 +39,19 @@ function createFeaturedCard(venue) {
 }
 
 function createStandardCard(venue) {
+  const imageUrl = venue.media?.[0]?.url;
+  const imageAlt = venue.media?.[0]?.alt || venue.name;
   return /*html*/ `
     <article class="overflow-hidden rounded-2xl bg-white">
-      <div class="h-32 bg-gray-light"></div>
+      ${
+        imageUrl
+          ? `<img 
+      src="${imageUrl}" 
+      alt="${imageAlt}" 
+      class="h-32 w-full object-cover shrink-0">
+      `
+          : `<div class="h-32 w-full object-cover shrink-0 bg-gray-light"></div>`
+      }
 
       <div class="p-2">
         <h2 class="font-body font-semibold text-sm text-black line-clamp-2"
