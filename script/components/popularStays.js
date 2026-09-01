@@ -1,7 +1,8 @@
 import { createVenueCard } from "../render/venueCard.js";
 
-export function renderPopularStays() {
+export function renderPopularStays(venues) {
   const venueList = document.getElementById("venue-list");
+  const popularVenues = venues.slice(0, 5);
 
   venueList.innerHTML = /*html*/ `
     <div class="px-4 py-6 md:px-8 lg:px-12">
@@ -9,20 +10,18 @@ export function renderPopularStays() {
     >
     Popular Stays
     </h2>
+
     <div 
     id="popular-carousel"
-    class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-12 pb-4">
-      ${createVenueCard("featured")}
-      ${createVenueCard("featured")}
-      ${createVenueCard("featured")}
-      ${createVenueCard("featured")}
-      ${createVenueCard("featured")}
+    class="flex snap-x snap-mandatory gap-4 overflow-x-auto px-12 pb-4"
+    >
+      ${popularVenues.map((venue) => createVenueCard(venue)).join("")}
     </div>
 
     <a href="#venue-list"
     class="mt-4 inline-block rounded-full bg-accent-tan px-4 py-2 font-body text-sm font-medium text-black"
     >
-    Explore Stays
+      Explore Stays
     </a>
 </div>
 `;

@@ -4,16 +4,6 @@ import { renderPopularStays } from "../components/popularStays.js";
 import { renderMoreStays } from "../components/moreStays.js";
 import { getVenues } from "../api/venues.js";
 
-async function loadVenues() {
-  try {
-    const response = await getVenues();
-
-    console.log("Venues", response.data);
-  } catch (error) {
-    console.error("Failed to load venues:", error);
-  }
-}
-
 renderHeader();
 
 const home = document.getElementById("home");
@@ -25,9 +15,20 @@ home.innerHTML = /*html*/ `
   <section id="more-stays"></section>
 `;
 
-const venueList = document.getElementById("venue-list");
-
 renderHero();
-renderPopularStays();
-renderMoreStays();
+
+async function loadVenues() {
+  try {
+    const response = await getVenues();
+    const venues = response.data;
+
+    console.log("Venues", response.data);
+
+    renderPopularStays(venues);
+    renderMoreStays(venues);
+  } catch (error) {
+    console.error("Failed to load venues:", error);
+  }
+}
+
 loadVenues();
