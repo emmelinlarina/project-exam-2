@@ -1,4 +1,4 @@
-import { createVenueCard } from "./venueCard.js";
+import { createVenueCard } from "../render/venueCard.js";
 
 export function renderMoreStays() {
   const moreStays = document.getElementById("more-stays");
