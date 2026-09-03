@@ -1,10 +1,12 @@
 import { searchVenues } from "../api/venues.js";
+import { renderVenueList } from "../render/venueList.js";
 
 export function renderSearchBar() {
   const searchSection = document.getElementById("venue-search");
 
   searchSection.innerHTML = /*html*/ `
-    <div class="px-4 py-4 flex justify-center">
+    <div class="px-4 py-4">
+        <div class="flex justify-center">
         <form 
         id="venue-search-form" 
         class="flex w-full max-w-xs items-center rounded-full bg-accent-blue px-5 py-2">
@@ -23,25 +25,53 @@ export function renderSearchBar() {
             <i class="fa-solid fa-magnifying-glass"></i>
         </button>
         </form>
+        </div>
+
+        <div 
+        id="search-results"
+        class="mt-6"
+        >
+        </div>
+
     </div>
     `;
 
   const form = document.getElementById("venue-search-form");
   const input = document.getElementById("venue-search-input");
+  const results = document.getElementById("search-results");
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const query = input.value;
+    const query = input.value.trim();
 
     if (!query) return;
 
     try {
       const response = await searchVenues(query);
+      const venues = response.data;
 
-      console.log("Search results", response.data);
+      if (venues.length === 0) {
+        results.innerHTML = `
+        <p class="text-center text-sm"
+        >
+        No results found
+        </p>
+        `;
+        return;
+      }
+
+      results.innerHTML = /*html*/ `
+        <h2 class="font-body font-semibold text-lg mb-4">
+        Search Results
+        </h2>
+
+        <div id="search-venue-list"></div>
+      `;
+
+      renderVenueList(venues, "search-venue-list");
     } catch (error) {
-      console.error("Error searching venues", error);
+      console.error("Search failed", error);
     }
   });
 }

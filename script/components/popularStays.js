@@ -1,7 +1,7 @@
 import { createVenueCard } from "../render/venueCard.js";
 
 export function renderPopularStays(venues) {
-  const venueList = document.getElementById("venue-list");
+  const venueList = document.getElementById("popular-stays");
   const popularVenues = venues.slice(0, 5);
 
   venueList.innerHTML = /*html*/ `

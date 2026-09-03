@@ -4,6 +4,7 @@ import { renderPopularStays } from "../components/popularStays.js";
 import { renderMoreStays } from "../components/moreStays.js";
 import { getVenues } from "../api/venues.js";
 import { renderSearchBar } from "../components/searchBar.js";
+import { renderVenueList } from "../render/venueList.js";
 
 renderHeader();
 
@@ -11,10 +12,11 @@ const home = document.getElementById("home");
 
 home.innerHTML = /*html*/ `
   <section id="hero"></section>
-  <section id="venue-list"></section>
+  <section id="popular-stays"></section>
   <section id="more-stays"></section>
   <section id="venue-search"></section>
-  <section id="why-holidaze"></section>
+  <section id="venue-list"></section>
+  <section id="why-holidaz"></section>
 `;
 
 renderHero();
@@ -28,10 +30,11 @@ async function loadVenues() {
 
     renderPopularStays(venues);
     renderMoreStays(venues);
+    renderVenueList(venues.slice(0, 8));
   } catch (error) {
     console.error("Failed to load venues:", error);
   }
 }
 
-renderSearchBar();
 loadVenues();
+renderSearchBar();
