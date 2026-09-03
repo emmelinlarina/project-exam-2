@@ -11,6 +11,7 @@ function createFeaturedCard(venue) {
   const imageAlt = venue.media?.[0]?.alt || venue.name;
 
   return /*html*/ `
+  <a href="./venue.html?id=${venue.id}">
     <article class="flex flex-col h-75 w-60 shrink-0 snap-center overflow-hidden rounded-3xl border border-accent-brown bg-white">
       
     ${
@@ -28,6 +29,11 @@ function createFeaturedCard(venue) {
         >
         ${venue.name}
       </h2>
+
+      <p class="mt-1 text-xs text-black font-bold"
+        >
+          ★ ${venue.rating}
+        </p> 
         
         <p class="mt-auto text-xs text-secondary font-bold"
         >
@@ -35,13 +41,16 @@ function createFeaturedCard(venue) {
       </p>
       </div>
     </article>
+  </a>
   `;
 }
 
 function createStandardCard(venue) {
   const imageUrl = venue.media?.[0]?.url;
   const imageAlt = venue.media?.[0]?.alt || venue.name;
+
   return /*html*/ `
+  <a href="./venue.html?id=${venue.id}">
     <article class="overflow-hidden rounded-2xl bg-white">
       ${
         imageUrl
@@ -60,15 +69,16 @@ function createStandardCard(venue) {
 
         <p class="mt-1 text-xs text-black font-bold"
         >
-          Reviews
-        </p>
+          ★ ${venue.rating}
+        </p> 
 
         <p class="mt-1 text-xs text-secondary font-bold"
         >
-        ${venue.price} $ / night
+           ${venue.price} $ / night
       </p>
 
       </div>
     </article>
+  </a>
   `;
 }
