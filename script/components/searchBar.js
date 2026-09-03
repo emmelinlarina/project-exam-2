@@ -27,18 +27,12 @@ export function renderSearchBar() {
         </form>
         </div>
 
-        <div 
-        id="search-results"
-        class="mt-6"
-        >
-        </div>
-
     </div>
     `;
 
   const form = document.getElementById("venue-search-form");
   const input = document.getElementById("venue-search-input");
-  const results = document.getElementById("search-results");
+  const message = document.createElement("search-message");
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -52,7 +46,7 @@ export function renderSearchBar() {
       const venues = response.data;
 
       if (venues.length === 0) {
-        results.innerHTML = `
+        message.innerHTML = `
         <p class="text-center text-sm"
         >
         No results found
@@ -61,15 +55,8 @@ export function renderSearchBar() {
         return;
       }
 
-      results.innerHTML = /*html*/ `
-        <h2 class="font-body font-semibold text-lg mb-4">
-        Search Results
-        </h2>
-
-        <div id="search-venue-list"></div>
-      `;
-
-      renderVenueList(venues, "search-venue-list");
+      message.innerHTML = "";
+      renderVenueList(venues);
     } catch (error) {
       console.error("Search failed", error);
     }
