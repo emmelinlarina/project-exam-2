@@ -40,22 +40,50 @@ async function loadVenues() {
 }
 
 loadVenues();
-renderSearchBar();
-renderVenueFilters((sortValue) => {
-  let sortedVenues = [...currentVenues];
+renderSearchBar((venues) => {
+  currentVenues = venues;
+  renderVenueList(venues);
+});
 
-  if (sortValue === "price-asc") {
-    sortedVenues.sort((a, b) => a.price - b.price);
+renderVenueFilters((filters) => {
+  let filteredVenues = [...currentVenues];
+
+  if (filters.location) {
+    const location = filters.location.toLowerCase();
+
+    filteredVenues = filteredVenues.filter((venue) => {
+      const city = venue.location?.city?.toLowerCase() || "";
+      const country = venue.location?.country?.toLowerCase() || "";
+      const continent = venue.location?.continent?.toLowerCase() || "";
+
+      return (
+        city.includes(location) ||
+        country.includes(location) ||
+        continent.includes(location)
+      );
+    });
   }
 
-  if (sortValue === "price-desc") {
-    sortedVenues.sort((a, b) => b.price - a.price);
+  if (filters.guests) {
+    filteredVenues = filteredVenues.filter((venue) => {
+      return venue.maxGuests >= filters.guests;
+    });
   }
-  if (sortValue === "rating-asc") {
-    sortedVenues.sort((a, b) => a.rating - b.rating);
+
+  if (filters.sort) {
+    if (filters.sort === "price-asc") {
+      filteredVenues.sort((a, b) => a.price - b.price);
+    }
+    if (filters.sort === "price-desc") {
+      filteredVenues.sort((a, b) => b.price - a.price);
+    }
+    if (filters.sort === "rating-asc") {
+      filteredVenues.sort((a, b) => a.rating - b.rating);
+    }
+    if (filters.sort === "rating-desc") {
+      filteredVenues.sort((a, b) => b.rating - a.rating);
+    }
   }
-  if (sortValue === "rating-desc") {
-    sortedVenues.sort((a, b) => b.rating - a.rating);
-  }
-  renderVenueList(sortedVenues);
+
+  renderVenueList(filteredVenues);
 });

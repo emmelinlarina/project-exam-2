@@ -1,7 +1,6 @@
 import { searchVenues } from "../api/venues.js";
-import { renderVenueList } from "../render/venueList.js";
 
-export function renderSearchBar() {
+export function renderSearchBar(onSearch) {
   const searchSection = document.getElementById("venue-search");
 
   searchSection.innerHTML = /*html*/ `
@@ -56,7 +55,7 @@ export function renderSearchBar() {
       }
 
       message.innerHTML = "";
-      renderVenueList(venues, "venue-list", 1);
+      onSearch(venues);
     } catch (error) {
       console.error("Search failed", error);
     }
