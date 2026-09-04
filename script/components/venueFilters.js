@@ -90,6 +90,18 @@ export function renderVenueFilters(onFilterChange) {
   const guestsInput = document.getElementById("guests");
   const sortSelect = document.getElementById("venue-sort");
   const applyButton = document.getElementById("apply-filters");
+  const today = new Date().toISOString().split("T")[0];
+
+  checkInInput.min = today;
+  checkOutInput.min = today;
+
+  checkInInput.addEventListener("change", () => {
+    checkOutInput.min = checkInInput.value;
+
+    if (checkOutInput.value && checkOutInput.value <= checkInInput.value) {
+      checkOutInput.value = "";
+    }
+  });
 
   applyButton.addEventListener("click", () => {
     onFilterChange({

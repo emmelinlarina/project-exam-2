@@ -6,6 +6,7 @@ import { getVenues } from "../api/venues.js";
 import { renderSearchBar } from "../components/searchBar.js";
 import { renderVenueFilters } from "../components/venueFilters.js";
 import { renderVenueList } from "../render/venueList.js";
+import { isVenueAvailable } from "../utils/isVenueAvailable.js";
 
 let currentVenues = [];
 
@@ -29,6 +30,9 @@ async function loadVenues() {
   try {
     const response = await getVenues();
     const venues = response.data;
+
+    console.log("Venues:", venues);
+
     currentVenues = venues;
 
     renderPopularStays(venues);
@@ -68,6 +72,16 @@ renderVenueFilters((filters) => {
     filteredVenues = filteredVenues.filter((venue) => {
       return venue.maxGuests >= filters.guests;
     });
+  }
+
+  if (filters.checkIn && filters.checkOut) {
+    console.log("Dates:", filters.checkIn, filters.checkOut);
+
+    filteredVenues = filteredVenues.filter((venue) => {
+      return isVenueAvailable(venue, filters.checkIn, filters.checkOut);
+    });
+
+    console.log("Available Venues:", filteredVenues.length);
   }
 
   if (filters.sort) {

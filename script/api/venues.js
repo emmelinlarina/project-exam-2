@@ -1,11 +1,11 @@
 import { apiFetch } from "./api-fetch.js";
 
 export async function getVenues() {
-  return apiFetch("holidaze/venues");
+  return apiFetch("holidaze/venues?_bookings=true");
 }
 
 export async function getVenue(id) {
-  return apiFetch(`holidaze/venues/${id}`);
+  return apiFetch(`holidaze/venues/${id}?_bookings=true`);
 }
 
 export function searchVenues(query) {
