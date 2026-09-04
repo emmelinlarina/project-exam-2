@@ -56,7 +56,7 @@ export function renderSearchBar() {
       }
 
       message.innerHTML = "";
-      renderVenueList(venues);
+      renderVenueList(venues, "venue-list", 1);
     } catch (error) {
       console.error("Search failed", error);
     }
