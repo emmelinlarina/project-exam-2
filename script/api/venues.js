@@ -5,7 +5,7 @@ export async function getVenues() {
 }
 
 export async function getVenue(id) {
-  return apiFetch(`holidaze/venues/${id}?_bookings=true`);
+  return apiFetch(`holidaze/venues/${id}?_bookings=true&_owner=true`);
 }
 
 export function searchVenues(query) {

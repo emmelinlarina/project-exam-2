@@ -78,6 +78,14 @@ async function loadVenue() {
                             }
                         </p>
 
+                        <p class="mt-2 text-sm ">
+                            Up to ${venue.maxGuests} guests
+                        </p>
+
+                        <p class="mt-2 text-sm ">
+                            ${venue.owner.name} is hosting
+                        </p>
+
                     <div class="my-6 border-t pt-4">
                         <h2 class="font-body text-xl font-semibold">
                             Description
@@ -87,17 +95,56 @@ async function loadVenue() {
                         ${venue.description}
                         </p>
                     </div>
+
+                    <div class="my-6 border-t pt-4">
+                        <h2 class="font-body text-xl font-semibold">
+                            Amenities
+                        </h2>
+
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            ${
+                              venue.meta?.wifi
+                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                WiFi
+                                    </span>`
+                                : ""
+                            }
+
+                            ${
+                              venue.meta?.parking
+                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                Parking
+                                    </span>`
+                                : ""
+                            }
+
+                            ${
+                              venue.meta?.breakfast
+                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                Breakfast
+                                    </span>`
+                                : ""
+                            }
+
+                            ${
+                              venue.meta?.pets
+                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                Pets allowed
+                                    </span>`
+                                : ""
+                            }
+                    </div>
                 </div>
             </div>
-
+        </div>
             <aside 
             id="booking-card"
-            class="rounded-3xl border bg-white shadow-sm p-5"
+            class="rounded-3xl border bg-white shadow-sm p-5 lg:sticky lg:top-6 lg:self-start"
             >
             Booking Card
             </aside>
 
-        </div>
+
     </div>
         `;
   } catch (error) {
