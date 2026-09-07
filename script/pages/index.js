@@ -21,12 +21,39 @@ home.innerHTML = /*html*/ `
   <section id="popular-stays"></section>
   <section id="more-stays"></section>
   <section id="venue-search"></section>
+  <section id="results-info"></section>
   <section id="venue-filters"></section>
   <section id="venue-list"></section>
   <section id="why-holidaz"></section>
 `;
 
 renderHero();
+
+function renderResultsInfo(count) {
+  const resultsInfo = document.getElementById("results-info");
+
+  if (count === 0) {
+    resultsInfo.innerHTML = /*html*/ `
+    <div class="px-4 py-6 text-center md:px-8 lg:px-12">
+      <p class="font-medium">
+        No stays found.
+      </p>
+      <p class="mt-1 text-sm">
+        Try adjusting your search criteria.
+      </p>
+    </div>
+    `;
+    return;
+  }
+
+  resultsInfo.innerHTML = /*html*/ `
+    <div class="px-4 pt-4 md:px-8 lg:px-12">
+      <p class="text-sm font-medium">
+        ${count} ${count === 1 ? "stay" : "stays"} found
+      </p>
+    </div>
+  `;
+}
 
 async function loadVenues() {
   try {
@@ -80,6 +107,8 @@ renderSearchBar((search) => {
 
   baseVenues = filteredVenues;
   currentVenues = filteredVenues;
+
+  renderResultsInfo(currentVenues.length);
   renderVenueList(currentVenues);
 });
 

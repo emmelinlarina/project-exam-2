@@ -11,7 +11,7 @@ export function renderVenueFilters(onFilterChange) {
                 
            <button 
            type="button" 
-           class="sort-button rounded-full border px-4 py-2 text-sm"
+           class="sort-button rounded-full border px-4 py-2 text-sm bg-accent-blue text-white"
            data-sort="default"
            >
            Default
@@ -48,7 +48,13 @@ export function renderVenueFilters(onFilterChange) {
 
   sortButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      sortButtons.forEach((btn) => {
+        btn.classList.remove("bg-accent-blue", "text-white");
+      });
+
       const sort = button.getAttribute("data-sort");
+
+      button.classList.add("bg-accent-blue", "text-white");
       onFilterChange({ sort });
     });
   });
