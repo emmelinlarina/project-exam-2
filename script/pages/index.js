@@ -7,12 +7,14 @@ import { renderSearchBar } from "../components/searchBar.js";
 import { renderVenueFilters } from "../components/venueFilters.js";
 import { renderVenueList } from "../render/venueList.js";
 import { isVenueAvailable } from "../utils/isVenueAvailable.js";
+import { renderFooter } from "../components/footer.js";
 
 let allVenues = [];
 let currentVenues = [];
 let baseVenues = [];
 
 renderHeader();
+renderFooter();
 
 const home = document.getElementById("home");
 
