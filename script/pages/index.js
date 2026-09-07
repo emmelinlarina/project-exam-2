@@ -8,7 +8,9 @@ import { renderVenueFilters } from "../components/venueFilters.js";
 import { renderVenueList } from "../render/venueList.js";
 import { isVenueAvailable } from "../utils/isVenueAvailable.js";
 
+let allVenues = [];
 let currentVenues = [];
+let baseVenues = [];
 
 renderHeader();
 
@@ -31,8 +33,8 @@ async function loadVenues() {
     const response = await getVenues();
     const venues = response.data;
 
-    console.log("Venues:", venues);
-
+    allVenues = venues;
+    baseVenues = venues;
     currentVenues = venues;
 
     renderPopularStays(venues);
@@ -44,16 +46,12 @@ async function loadVenues() {
 }
 
 loadVenues();
-renderSearchBar((venues) => {
-  currentVenues = venues;
-  renderVenueList(venues);
-});
 
-renderVenueFilters((filters) => {
-  let filteredVenues = [...currentVenues];
+renderSearchBar((search) => {
+  let filteredVenues = [...allVenues];
 
-  if (filters.location) {
-    const location = filters.location.toLowerCase();
+  if (search.location) {
+    const location = search.location.toLowerCase();
 
     filteredVenues = filteredVenues.filter((venue) => {
       const city = venue.location?.city?.toLowerCase() || "";
@@ -68,36 +66,36 @@ renderVenueFilters((filters) => {
     });
   }
 
-  if (filters.guests) {
+  if (search.guests) {
+    filteredVenues = filteredVenues.filter(
+      (venue) => venue.maxGuests >= search.guests,
+    );
+  }
+
+  if (search.checkIn && search.checkOut) {
     filteredVenues = filteredVenues.filter((venue) => {
-      return venue.maxGuests >= filters.guests;
+      return isVenueAvailable(venue, search.checkIn, search.checkOut);
     });
   }
 
-  if (filters.checkIn && filters.checkOut) {
-    console.log("Dates:", filters.checkIn, filters.checkOut);
+  baseVenues = filteredVenues;
+  currentVenues = filteredVenues;
+  renderVenueList(currentVenues);
+});
 
-    filteredVenues = filteredVenues.filter((venue) => {
-      return isVenueAvailable(venue, filters.checkIn, filters.checkOut);
-    });
+renderVenueFilters((filters) => {
+  const filteredVenues = [...baseVenues];
 
-    console.log("Available Venues:", filteredVenues.length);
+  if (filters.sort === "price-asc") {
+    filteredVenues.sort((a, b) => a.price - b.price);
+  }
+  if (filters.sort === "price-desc") {
+    filteredVenues.sort((a, b) => b.price - a.price);
+  }
+  if (filters.sort === "rating-desc") {
+    filteredVenues.sort((a, b) => b.rating - a.rating);
   }
 
-  if (filters.sort) {
-    if (filters.sort === "price-asc") {
-      filteredVenues.sort((a, b) => a.price - b.price);
-    }
-    if (filters.sort === "price-desc") {
-      filteredVenues.sort((a, b) => b.price - a.price);
-    }
-    if (filters.sort === "rating-asc") {
-      filteredVenues.sort((a, b) => a.rating - b.rating);
-    }
-    if (filters.sort === "rating-desc") {
-      filteredVenues.sort((a, b) => b.rating - a.rating);
-    }
-  }
-
-  renderVenueList(filteredVenues);
+  currentVenues = filteredVenues;
+  renderVenueList(currentVenues);
 });
