@@ -11,7 +11,8 @@ function createFeaturedCard(venue) {
   const imageAlt = venue.media?.[0]?.alt || venue.name;
 
   return /*html*/ `
-  <a href="./venue.html?id=${venue.id}">
+  <a href="./venue.html?id=${venue.id}"
+  class="block rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-brown">
     <article class="flex flex-col h-75 w-60 shrink-0 snap-center overflow-hidden rounded-3xl border border-accent-brown bg-white">
       
     ${
@@ -19,16 +20,16 @@ function createFeaturedCard(venue) {
         ? `<img 
       src="${imageUrl}" 
       alt="${imageAlt}" 
-      class="h-52 w-full object-cover shrink-0">
+      class="h-52 w-full object-cover shrink-0 bg-gray-light">
       `
         : `<div class="h-52 w-full object-cover shrink-0"></div>`
     }
 
       <div class="p-3 flex flex-col flex-1">
-        <h2 class="font-body font-semibold text-sm text-black line-clamp-2"
+        <h3 class="font-body font-semibold text-sm text-black line-clamp-2"
         >
         ${venue.name}
-      </h2>
+      </h3>
 
       <p class="mt-1 text-xs text-black font-bold"
         >
@@ -50,7 +51,8 @@ function createStandardCard(venue) {
   const imageAlt = venue.media?.[0]?.alt || venue.name;
 
   return /*html*/ `
-  <a href="./venue.html?id=${venue.id}">
+  <a href="./venue.html?id=${venue.id}"
+  class="block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-brown">
     <article class="overflow-hidden rounded-2xl bg-white">
       ${
         imageUrl
@@ -59,13 +61,13 @@ function createStandardCard(venue) {
       alt="${imageAlt}" 
       class="h-32 w-full object-cover shrink-0">
       `
-          : `<div class="h-32 w-full object-cover shrink-0 bg-gray-light"></div>`
+          : `<div class="h-32 w-full shrink-0 bg-gray-light"></div>`
       }
 
       <div class="p-2">
-        <h2 class="font-body font-semibold text-sm text-black line-clamp-2"
+        <h3 class="font-body font-semibold text-sm text-black line-clamp-2"
         >${venue.name}
-      </h2>
+      </h3>
 
         <p class="mt-1 text-xs text-black font-bold"
         >
