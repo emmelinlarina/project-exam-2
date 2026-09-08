@@ -12,6 +12,12 @@ const id = params.get("id");
 const venuePage = document.getElementById("venue");
 
 async function loadVenue() {
+  venuePage.innerHTML = `
+    <p class="px-4 py-10 text-center" role="status">
+    Loading venue...
+    </p>
+    `;
+
   try {
     const response = await getVenue(id);
     const venue = response.data;
@@ -269,7 +275,24 @@ async function loadVenue() {
     });
   } catch (error) {
     console.error("Error loading venue:", error);
-    venuePage.innerHTML = "<p>Failed to load venue details.</p>";
+
+    venuePage.innerHTML = /*html*/ `
+    <div 
+        class="px-4 py-10 text-center" 
+        role="alert"
+        >
+        <p class="font-semibold">
+            Failed to load venue details.
+        </p>
+
+        <a
+            href="./index.html"
+            class="mt-3 inline-block text-sm text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
+        >
+            Go back to homepage
+        </a>
+    </div>
+    `;
   }
 }
 
