@@ -8,6 +8,7 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-500: oklch(63.7% 0.237 25.331);
     --color-indigo-500: oklch(58.5% 0.233 277.117);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
@@ -49,7 +50,10 @@
     --color-accent-blue: #22333b;
     --color-accent-brown: #5e503f;
     --color-accent-tan: #c6ac8f;
+    --color-accent-cream: #d8c6b2;
     --color-gray-light: #efefef;
+    --color-gray: #a09c97;
+    --color-status-error: #8b5c5a;
   }
 }
 @layer base {
@@ -261,6 +265,9 @@
   .mb-1 {
     margin-bottom: var(--spacing);
   }
+  .mb-3 {
+    margin-bottom: calc(var(--spacing) * 3);
+  }
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
   }
@@ -294,6 +301,12 @@
   .table {
     display: table;
   }
+  .h-3 {
+    height: calc(var(--spacing) * 3);
+  }
+  .h-7 {
+    height: calc(var(--spacing) * 7);
+  }
   .h-8 {
     height: calc(var(--spacing) * 8);
   }
@@ -320,6 +333,12 @@
   }
   .min-h-80 {
     min-height: calc(var(--spacing) * 80);
+  }
+  .w-3 {
+    width: calc(var(--spacing) * 3);
+  }
+  .w-7 {
+    width: calc(var(--spacing) * 7);
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
@@ -396,6 +415,12 @@
   .justify-center {
     justify-content: center;
   }
+  .gap-0 {
+    gap: 0px;
+  }
+  .gap-0\.5 {
+    gap: calc(var(--spacing) * 0.5);
+  }
   .gap-1 {
     gap: var(--spacing);
   }
@@ -418,6 +443,12 @@
     --tw-space-y-reverse: 0;
     margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  .gap-x-4 {
+    column-gap: calc(var(--spacing) * 4);
+  }
+  .gap-y-2 {
+    row-gap: calc(var(--spacing) * 2);
   }
   .overflow-hidden {
     overflow: hidden;
@@ -444,27 +475,53 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-1 {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
   }
+  .border-accent-blue {
+    border-color: var(--color-accent-blue);
+  }
   .border-accent-brown {
     border-color: var(--color-accent-brown);
+  }
+  .border-gray {
+    border-color: var(--color-gray);
   }
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
+  .border-gray-light {
+    border-color: var(--color-gray-light);
+  }
   .bg-accent-blue {
     background-color: var(--color-accent-blue);
   }
+  .bg-accent-cream {
+    background-color: var(--color-accent-cream);
+  }
   .bg-accent-tan {
     background-color: var(--color-accent-tan);
+  }
+  .bg-gray {
+    background-color: var(--color-gray);
   }
   .bg-gray-light {
     background-color: var(--color-gray-light);
   }
   .bg-primary {
     background-color: var(--color-primary);
+  }
+  .bg-secondary {
+    background-color: var(--color-secondary);
   }
   .bg-transparent {
     background-color: transparent;
@@ -588,8 +645,14 @@
   .text-gray-500 {
     color: var(--color-gray-500);
   }
+  .text-red-500 {
+    color: var(--color-red-500);
+  }
   .text-secondary {
     color: var(--color-secondary);
+  }
+  .text-status-error {
+    color: var(--color-status-error);
   }
   .text-white {
     color: var(--color-white);
@@ -618,6 +681,9 @@
     color: var(--color-white);
   }
   @media (hover: hover) {
+    .hover\:bg-gray-light:hover {
+      background-color: var(--color-gray-light);
+    }
     .hover\:opacity-75:hover {
       opacity: 75%;
     }
@@ -629,6 +695,9 @@
   .focus-visible\:ring-2:focus-visible {
     --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .focus-visible\:ring-accent-blue:focus-visible {
+    --tw-ring-color: var(--color-accent-blue);
   }
   .focus-visible\:ring-accent-brown:focus-visible {
     --tw-ring-color: var(--color-accent-brown);

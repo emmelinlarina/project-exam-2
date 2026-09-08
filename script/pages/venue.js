@@ -159,20 +159,26 @@ async function loadVenue() {
             <div class="mt-4 grid grid-cols-2 gap-2">
                 <div class="rounded-xl bg-gray-light p-3">
                     <p class="text-xs">Check in</p>
-                    <p id="selected-check-in" class="text-sm font-semibold">
+                    <p 
+                    id="selected-check-in" 
+                    class="text-sm font-semibold" 
+                    aria-live="polite">
                         Select date
                     </p>
                 </div>
 
                 <div class="rounded-xl bg-gray-light p-3">
                     <p class="text-xs">Check out</p>
-                    <p id="selected-check-out" class="text-sm font-semibold">
+                    <p 
+                    id="selected-check-out" 
+                    class="text-sm font-semibold" 
+                    aria-live="polite">
                         Select date
                     </p>
                 </div>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 mb-3">
                 <label
                 for="booking-guests"
                 class="mb-1 block text-xs font-medium"
@@ -186,8 +192,15 @@ async function loadVenue() {
                 min="1" 
                 max="${venue.maxGuests}"
                 value="1"
-                class="block w-full rounded-lg border-gray-300 text-sm px-3 py-2"
+                inputmode="numeric"
+                class="w-full rounded-xl border px-3 py-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
                 />
+
+                <p
+                id="guest-error"
+                class="mt-1 hidden text-xs text-status-error"
+                aria-live="polite"
+                ></p>
             </div>
 
             <button 
@@ -204,6 +217,34 @@ async function loadVenue() {
         `;
 
     venueCalendar(venue);
+
+    const guestInput = document.getElementById("booking-guests");
+    const guestError = document.getElementById("guest-error");
+
+    guestInput.addEventListener("input", () => {
+      let guests = Number(guestInput.value);
+
+      if (!Number.isFinite(guests)) {
+        guests = 1;
+      }
+
+      if (guests < 1) {
+        guestInput.value = 1;
+        guestError.textContent = "At least 1 guest is required.";
+        guestError.classList.remove("hidden");
+        return;
+      }
+
+      if (guests > venue.maxGuests) {
+        guestInput.value = venue.maxGuests;
+        guestError.textContent = `Maximum ${venue.maxGuests} guests allowed.`;
+        guestError.classList.remove("hidden");
+        return;
+      }
+
+      guestError.textContent = "";
+      guestError.classList.add("hidden");
+    });
   } catch (error) {
     console.error("Error loading venue:", error);
     venuePage.innerHTML = "<p>Failed to load venue details.</p>";

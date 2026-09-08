@@ -13,6 +13,21 @@ export function venueCalendar(venue) {
     });
   }
 
+  function isInSelectedRange(date) {
+    if (!selectedCheckIn || !selectedCheckOut) return false;
+
+    return date > selectedCheckIn && date < selectedCheckOut;
+  }
+
+  function isRangeAvailable(startDate, endDate) {
+    return !venue.bookings?.some((booking) => {
+      const bookingStart = new Date(booking.dateFrom);
+      const bookingEnd = new Date(booking.dateTo);
+
+      return startDate < bookingEnd && endDate > bookingStart;
+    });
+  }
+
   function formatDate(date) {
     return date.toLocaleDateString("en-GB", {
       day: "numeric",
@@ -41,6 +56,7 @@ export function venueCalendar(venue) {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const booked = isBooked(date);
+      const inSelectedRange = isInSelectedRange(date);
 
       const isCheckIn =
         selectedCheckIn &&
@@ -50,15 +66,30 @@ export function venueCalendar(venue) {
         selectedCheckOut &&
         date.toDateString() === selectedCheckOut.toDateString();
 
-      daysHtml += `
+      const stateLabel = booked
+        ? "Unavailable"
+        : isCheckIn
+          ? "Selected check-in"
+          : isCheckOut
+            ? "Selected check-out"
+            : inSelectedRange
+              ? "Selected range"
+              : "Available";
+
+      daysHtml += /*html*/ `
             <button
                 type="button"
-                class="calendar-day h-8 w-8 rounded-full text-sm
+                class="calendar-day flex h-8 w-8 items-center justify-center rounded-full text-sm
                 ${booked ? "bg-gray-light text-gray-400 cursor-not-allowed" : ""}
-                ${isCheckIn || isCheckOut ? "bg-accent-blue text-white" : ""}"
+                ${inSelectedRange ? "bg-accent-cream" : ""}
+                ${isCheckIn ? "bg-accent-blue text-white font-semibold" : ""}
+                ${isCheckOut ? " border-2 border-accent-blue text-accent-blue font-semibold" : ""}
+                focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
+
                 data-date="${date.toISOString()}"
                 ${booked ? "disabled" : ""}
-                aria-label="${date.toDateString()}"
+                aria-label="${date.toDateString()}, ${stateLabel}"
+                aria-pressed="${isCheckIn || isCheckOut}"
             >
                 ${day}
             </button>
@@ -72,12 +103,13 @@ export function venueCalendar(venue) {
                     type="button"
                     id="prev-month"
                     aria-label="Previous Month"
-                    class="h-8 w-8"
+                    class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-light
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
                 >
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
 
-                <h3 class="font-semibold">
+                <h3 class="font-body text-base font-semibold" aria-live="polite">
                     ${monthName} ${year}
                 </h3>
 
@@ -85,13 +117,14 @@ export function venueCalendar(venue) {
                     type="button"
                     id="next-month"
                     aria-label="Next Month"
-                    class="h-8 w-8"
+                    class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-light
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
                 >
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
 
-            <div class="mt-4 grid grid-cols-7 gap-1 text-center text-xs">
+            <div class="mt-4 grid grid-cols-7 gap-1 text-center text-sm">
                <span>Sun</span>
                <span>Mon</span>
                <span>Tue</span>
@@ -101,8 +134,24 @@ export function venueCalendar(venue) {
                <span>Sat</span>
             </div>
 
-            <div class="mt-2 grid grid-cols-7 gap-1 text-center">
+            <div class="mt-1 grid grid-cols-7 gap-1 text-center items-center justify-center">
                 ${daysHtml}
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 p-3 text-xs">
+                <span class="flex items-center gap-2">
+                    <span class="h-3 w-3 rounded-full bg-accent-blue"></span>
+                    Check-in
+                </span>
+                <span class="flex items-center gap-2">
+                    <span class="h-3 w-3 rounded-full border-2 border-accent-blue"></span>
+                    Check-out
+                </span>
+
+                <span class="flex items-center gap-2">
+                    <span class="h-3 w-3 rounded-full  bg-gray-light"></span>
+                    Unavailable
+                </span>
             </div>
         </div>
         `;
@@ -127,10 +176,12 @@ export function venueCalendar(venue) {
             selectedCheckIn = selectedDate;
             selectedCheckOut = null;
           } else if (selectedDate > selectedCheckIn) {
-            selectedCheckOut = selectedDate;
-          } else {
-            selectedCheckIn = selectedDate;
-            selectedCheckOut = null;
+            if (isRangeAvailable(selectedCheckIn, selectedDate)) {
+              selectedCheckOut = selectedDate;
+            } else {
+              selectedCheckIn = selectedDate;
+              selectedCheckOut = null;
+            }
           }
 
           updateSelectedDates();
