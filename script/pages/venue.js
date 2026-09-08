@@ -15,43 +15,55 @@ async function loadVenue() {
   try {
     const response = await getVenue(id);
     const venue = response.data;
-
-    const mainImage = venue.media?.[0]?.url;
-    const imageAlt = venue.media?.[0]?.alt || venue.name;
+    const fallbackImage = "./assets/images/fallback.jpg";
+    const media = venue.media?.length
+      ? venue.media
+      : [{ url: fallbackImage, alt: venue.name }];
 
     venuePage.innerHTML = /*html*/ `
         <div class="px-4 py-6 md:px-8 lg:px-12">
             <div class="grid gap-8 lg:grid-cols-[2fr_1fr]">
 
                 <div>
-                    ${
-                      mainImage
-                        ? `
-                        <img src="${mainImage}" 
-                        alt="${imageAlt}" 
+                    <img
+                        id="main-image"
+                        src="${media?.[0]?.url}" 
+                        alt="${media?.[0]?.alt || venue.name}" 
                         class="w-full h-80 rounded-3xl object-cover"
-                        />
-                        `
-                        : `
-                        <div class="h-80 w-full rounded-3xl bg-gray-light"></div>
-                        `
-                    }
+                        onerror="this.onerror=null;this.src='${fallbackImage}'"
+                    />
 
-                    <div class="mt-4 grid grid-cols-3 gap-2">
-                        ${
-                          venue.media
-                            ?.slice(1, 4)
-                            .map(
-                              (media) => `
-                                <img src="${media.url}" 
-                                alt="${media.alt || venue.name}" 
-                                class="w-full h-24 rounded-xl object-cover"
-                                />
-                            `,
-                            )
-                            .join("") || ""
-                        }
-                    </div>
+                    ${
+                      media.length > 1
+                        ? `
+                        <div class="mt-4 grid grid-cols-3 gap-2">
+                              ${
+                                media
+                                  .slice(0, 3)
+                                  .map(
+                                    (item, index) => `
+                                      <button 
+                                        type="button"
+                                        class="gallery-thumb overflow-hidden rounded-xl
+                                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-blue
+                                        data-images="${item.url}"
+                                        data-alt="${item.alt || venue.name}"
+                                        aria-label="View image ${index + 1}"
+                                        >
+                                        <img
+                                          src="${item.url}"
+                                          alt="${item.alt || venue.name}"
+                                          class="w-full h-24 rounded-xl object-cover"
+                                          onerror="this.onerror=null;this.src='${fallbackImage}'"
+                                        />
+                                      </button>
+                                    `,
+                                  )
+                                  .join("") || ""
+                              }
+                            </div>`
+                        : ""
+                    }
 
                     <div class="mt-6">
                         <div class="flex items-start justify-between gap-4">
@@ -217,6 +229,16 @@ async function loadVenue() {
         `;
 
     venueCalendar(venue);
+
+    const mainImageElement = document.getElementById("main-image");
+    const galleryButtons = document.querySelectorAll(".gallery-thumb");
+
+    galleryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        mainImageElement.src = button.dataset.images;
+        mainImageElement.alt = button.dataset.alt;
+      });
+    });
 
     const guestInput = document.getElementById("booking-guests");
     const guestError = document.getElementById("guest-error");
