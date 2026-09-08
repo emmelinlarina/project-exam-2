@@ -1,6 +1,7 @@
 import { getVenue } from "../api/venues.js";
 import { renderHeader } from "../components/header.js";
 import { renderFooter } from "../components/footer.js";
+import { venueCalendar } from "../components/venueCalendar.js";
 
 renderHeader();
 renderFooter();
@@ -141,12 +142,68 @@ async function loadVenue() {
             id="booking-card"
             class="rounded-3xl border bg-white shadow-sm p-5 lg:sticky lg:top-6 lg:self-start"
             >
-            Booking Card
-            </aside>
+            <h2 class="font-body text-xl font-semibold">
+                Availability
+            </h2>
+
+            <p class="mt-2 text-sm">
+                ${venue.price} $ / night
+            </p>
+
+            <div 
+                id="venue-calendar"
+                class="mt-4 rounded-2xl border p-4"
+            ></div>
+        
+
+            <div class="mt-4 grid grid-cols-2 gap-2">
+                <div class="rounded-xl bg-gray-light p-3">
+                    <p class="text-xs">Check in</p>
+                    <p id="selected-check-in" class="text-sm font-semibold">
+                        Select date
+                    </p>
+                </div>
+
+                <div class="rounded-xl bg-gray-light p-3">
+                    <p class="text-xs">Check out</p>
+                    <p id="selected-check-out" class="text-sm font-semibold">
+                        Select date
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <label
+                for="booking-guests"
+                class="mb-1 block text-xs font-medium"
+                >
+                Guests
+                </label>
+
+                <input 
+                type="number" 
+                id="booking-guests" 
+                min="1" 
+                max="${venue.maxGuests}"
+                value="1"
+                class="block w-full rounded-lg border-gray-300 text-sm px-3 py-2"
+                />
+            </div>
+
+            <button 
+            id="reserve-button"
+            type="button"
+            class="col-span-2 rounded-full bg-primary text-white py-2 px-4 text-sm font-semibold hover:bg-primary-dark"
+            >
+            Book Now
+            </button>
+        </aside>
 
 
     </div>
         `;
+
+    venueCalendar(venue);
   } catch (error) {
     console.error("Error loading venue:", error);
     venuePage.innerHTML = "<p>Failed to load venue details.</p>";
