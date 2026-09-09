@@ -1,4 +1,4 @@
-import { apiFetch } from "./api.js";
+import { apiFetch } from "./api-fetch.js";
 
 export function register({ name, email, password, venueManager }) {
   return apiFetch("/auth/register", {

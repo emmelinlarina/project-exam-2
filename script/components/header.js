@@ -1,64 +1,82 @@
+import { getProfile, clearAuth } from "../utils/storage.js";
+
 export function renderHeader() {
   const header = document.getElementById("header");
+  const profile = getProfile();
+
+  const isLoggedIn = Boolean(profile);
+  const isVenueManager = profile?.venueManager === true;
+
+  const navigationLinks = !isLoggedIn
+    ? /*html*/ `
+        <a href="#venue-list">Venues</a>
+        <a href="./login.html">Log in</a>
+        <a href="./register.html">Register</a>
+      `
+    : /*html*/ `
+        <a href="#venue-list">Venues</a>
+        <a href="./profile.html">Profile </a>
+        <a href="./bookings.html">Bookings</a>
+
+        ${
+          isVenueManager
+            ? /*html*/ `
+        <a href="./manage-venues.html">Manage Venues</a>
+        `
+            : ""
+        }
+        
+        <button
+          type="button"
+          class="logout-button"
+        >
+          Log out
+        </button>
+      `;
 
   header.innerHTML = /*html*/ `
     <nav 
-    class="flex items-center justify-between bg-primary text-white px-4 py-3"
-    aria-label="Main navigation"
-    >
-      <a 
-      href="/" 
-      aria-label="Holidaze home"
-      class="font-logo text-lg"
+      class="flex items-center justify-between bg-primary text-white px-4 py-3"
+      aria-label="Main navigation"
       >
-      Holidaze
-      </a>
-
-      <button 
-      type="button"
-      class="flex items-center justify-center text-white text-xl md:hidden"
-      aria-label="Open navigation menu"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-      >
-        <i class="fa-solid fa-bars" aria-hidden="true"></i>
-      </button>
-
-      <div class="hidden md:flex md:items-center md:gap-6">
         <a 
-        href="#venue-list" 
-        class="transition-opacity hover:opacity-75 text-white"
-        >
-        Venues
-      </a>
+          href="./index.html" 
+          aria-label="Holidaze home"
+          class="font-logo text-lg"
+          >
+          Holidaze
+       </a>
 
-        <a 
-        href="./login" 
-        class="transition-opacity hover:opacity-75 block py-2 text-white"
-        >
-        Login
-        </a>
-        <a 
-        href="./register" 
-        class="transition-opacity hover:opacity-75 block py-2 text-white"
-        >
-        Register
-        </a>
+        <button 
+          id="menu-button"
+          type="button"
+          class="flex items-center justify-center text-white text-xl md:hidden"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          >
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
 
-      </div>
-    </nav>
+        <div class="hidden md:flex md:items-center md:gap-6"
+        >
+          ${navigationLinks}
+
+        </div>
+      </nav>
 
     <div 
       id="mobile-menu" 
       class="hidden bg-primary px-4 py-4 md:hidden"
       >
-        <a href="#venue-list" class="block py-2 text-white">Venues</a>
-        <a href="./login" class="block py-2 text-white">Login</a>
-        <a href="./register" class="block py-2 text-white">Register</a>
+        <div class="flex flex-col gap-4"
+        >
+        ${navigationLinks}
+        </div>
       </div>
   `;
 
-  const menuButton = header.querySelector("button");
+  const menuButton = header.querySelector("#menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const menuIcon = menuButton.querySelector("i");
 
@@ -69,5 +87,14 @@ export function renderHeader() {
     mobileMenu.classList.toggle("hidden");
     menuIcon.classList.toggle("fa-bars");
     menuIcon.classList.toggle("fa-xmark");
+  });
+
+  const logoutButtons = header.querySelectorAll(".logout-button");
+
+  logoutButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      clearAuth();
+      window.location.href = "./index.html";
+    });
   });
 }
