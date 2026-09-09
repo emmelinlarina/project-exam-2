@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-body: "Mukta", sans-serif;
+  --font-logo: "Gasoek One", sans-serif;
+  --font-heading: "Fraunces", serif;
+
+  /* Brand */
+  --color-primary: #3c625d;
+  --color-secondary: #55917f;
+
+  /* Accent Colors */
+  --color-accent-blue: #22333b;
+  --color-accent-brown: #5e503f;
+  --color-accent-tan: #c6ac8f;
+  --color-accent-cream: #d8c6b2;
+  --color-accent-cream-2: #eae0d5;
+
+  /* Neutrals */
+  --color-white: #ffffff;
+  --color-gray-light: #efefef;
+  --color-gray: #a09c97;
+  --color-gray-dark: #343434;
+  --color-black: #000000;
+
+  /* Status */
+  --color-status-info: #7aa1b3;
+  --color-status-success: #55917f;
+  --color-status-warning: #e8af6d;
+  --color-status-error: #8b5c5a;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.font-logo {
+  letter-spacing: 0.05em;
+}
