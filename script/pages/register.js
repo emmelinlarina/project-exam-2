@@ -149,7 +149,7 @@ form.addEventListener("submit", async (event) => {
       venueManager,
     });
 
-    window.location.href = "./login.html";
+    window.location.href = "./login.html?registered=true";
   } catch (error) {
     console.error("Registration failed", error);
 

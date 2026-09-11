@@ -84,6 +84,12 @@ const emailInput = document.getElementById("login-email");
 const passwordInput = document.getElementById("login-password");
 const loginMessage = document.getElementById("login-message");
 
+const params = new URLSearchParams(window.location.search);
+
+if (params.get("registered") === "true") {
+  loginMessage.textContent = "Registration successful. You can now log in.";
+}
+
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
