@@ -61,6 +61,7 @@ registerMount.innerHTML = /*html*/ `
                     id="register-password" 
                     name="register-password" 
                     autocomplete="new-password"
+                    minlength="8"
                     required
                     class="w-full rounded-md border border-white/30 bg-transparent px-3 py-2 text-sm text-white" 
                     />
@@ -77,7 +78,7 @@ registerMount.innerHTML = /*html*/ `
                     </label>
 
                     <label class="flex items-center gap-2 text-sm">
-                        <input type="radio" name="account-type" value="manager" checked />
+                        <input type="radio" name="account-type" value="manager" />
                         Manage Venues
                     </label>
                 </fieldset>
@@ -126,19 +127,38 @@ form.addEventListener("submit", async (event) => {
   ).value;
 
   const venueManager = accountType === "manager";
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email.toLowerCase().endsWith("@stud.noroff.com")) {
+    message.textContent = "Email must be a @stud.noroff.com address.";
+    return;
+  }
+
+  if (password.length < 8) {
+    message.textContent = "Password must be at least 8 characters.";
+    return;
+  }
 
   try {
     await register({
-      name: nameInput.value.trim(),
-      email: emailInput.value.trim(),
-      password: passwordInput.value,
+      name,
+      email,
+      password,
       venueManager,
     });
 
-    window.location.href = "./login.html";
+    window.location.href = "./login.html?registered=true";
   } catch (error) {
     console.error("Registration failed", error);
 
-    message.textContent = "Registration failed. Please try again.";
+    if (error.message.includes("Profile already exists")) {
+      message.textContent =
+        "An account with this username or email already exists.";
+    } else {
+      message.textContent =
+        "Registration failed. Please try check your information and try again.";
+    }
   }
 });
