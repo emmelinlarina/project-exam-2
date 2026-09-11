@@ -1,7 +1,7 @@
 import { apiFetch } from "./api-fetch.js";
 
 export function register({ name, email, password, venueManager }) {
-  return apiFetch("/auth/register", {
+  return apiFetch("auth/register", {
     method: "POST",
     body: JSON.stringify({
       name,
@@ -13,7 +13,7 @@ export function register({ name, email, password, venueManager }) {
 }
 
 export function login({ email, password }) {
-  return apiFetch("/auth/login", {
+  return apiFetch("auth/login?_holidaze=true", {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });
