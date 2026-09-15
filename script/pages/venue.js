@@ -229,6 +229,13 @@ async function loadVenue() {
             >
             Book Now
             </button>
+
+            <p 
+            id="booking-message" 
+            class="mt-3 text-sm"
+            role="status"
+            aria-live="polite">
+        </p>
         </aside>
 
 
@@ -257,19 +264,19 @@ async function loadVenue() {
     const guestError = document.getElementById("guest-error");
 
     const reserveButton = document.getElementById("reserve-button");
+    const bookingMessage = document.getElementById("booking-message");
 
     reserveButton.addEventListener("click", async () => {
       const guests = Number(guestInput.value);
 
       if (!selectedCheckIn || !selectedCheckOut) {
-        console.log("Please select check-in and check-out dates.");
+        bookingMessage.textContent =
+          "Please select check-in and check-out dates.";
         return;
       }
 
       if (guests < 1 || guests > venue.maxGuests) {
-        console.log(
-          `Number of guests must be between 1 and ${venue.maxGuests}.`,
-        );
+        bookingMessage.textContent = `Number of guests must be between 1 and ${venue.maxGuests}.`;
         return;
       }
 
@@ -280,9 +287,11 @@ async function loadVenue() {
           guests: guests,
           venueId: venue.id,
         });
-        console.log("Booking created successfully:", response);
+
+        bookingMessage.textContent = "Booked!";
       } catch (error) {
         console.error("Booking failed:", error);
+        bookingMessage.textContent = "Booking failed. Please try again.";
       }
     });
 
