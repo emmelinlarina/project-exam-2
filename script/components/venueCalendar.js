@@ -1,4 +1,4 @@
-export function venueCalendar(venue) {
+export function venueCalendar(venue, onDateChange) {
   const calendarContainer = document.getElementById("venue-calendar");
 
   let currentDate = new Date();
@@ -201,6 +201,13 @@ export function venueCalendar(venue) {
     checkOutElement.textContent = selectedCheckOut
       ? formatDate(selectedCheckOut)
       : "Select date";
+
+    if (onDateChange) {
+      onDateChange({
+        checkIn: selectedCheckIn,
+        checkOut: selectedCheckOut,
+      });
+    }
   }
 
   renderCalendar();

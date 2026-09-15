@@ -2,6 +2,7 @@ import { getVenue } from "../api/venues.js";
 import { renderHeader } from "../components/header.js";
 import { renderFooter } from "../components/footer.js";
 import { venueCalendar } from "../components/venueCalendar.js";
+import { createBooking } from "../api/bookings.js";
 
 renderHeader();
 renderFooter();
@@ -234,7 +235,13 @@ async function loadVenue() {
     </div>
         `;
 
-    venueCalendar(venue);
+    let selectedCheckIn = null;
+    let selectedCheckOut = null;
+
+    venueCalendar(venue, ({ checkIn, checkOut }) => {
+      selectedCheckIn = checkIn;
+      selectedCheckOut = checkOut;
+    });
 
     const mainImageElement = document.getElementById("main-image");
     const galleryButtons = document.querySelectorAll(".gallery-thumb");
@@ -249,22 +256,52 @@ async function loadVenue() {
     const guestInput = document.getElementById("booking-guests");
     const guestError = document.getElementById("guest-error");
 
-    guestInput.addEventListener("input", () => {
-      let guests = Number(guestInput.value);
+    const reserveButton = document.getElementById("reserve-button");
 
-      if (!Number.isFinite(guests)) {
-        guests = 1;
+    reserveButton.addEventListener("click", async () => {
+      const guests = Number(guestInput.value);
+
+      if (!selectedCheckIn || !selectedCheckOut) {
+        console.log("Please select check-in and check-out dates.");
+        return;
+      }
+
+      if (guests < 1 || guests > venue.maxGuests) {
+        console.log(
+          `Number of guests must be between 1 and ${venue.maxGuests}.`,
+        );
+        return;
+      }
+
+      try {
+        const response = await createBooking({
+          dateFrom: toBookingDate(selectedCheckIn),
+          dateTo: toBookingDate(selectedCheckOut),
+          guests: guests,
+          venueId: venue.id,
+        });
+        console.log("Booking created successfully:", response);
+      } catch (error) {
+        console.error("Booking failed:", error);
+      }
+    });
+
+    guestInput.addEventListener("input", () => {
+      const guests = Number(guestInput.value);
+
+      if (guestInput.value === "") {
+        guestError.textContent = "";
+        guestError.classList.add("hidden");
+        return;
       }
 
       if (guests < 1) {
-        guestInput.value = 1;
         guestError.textContent = "At least 1 guest is required.";
         guestError.classList.remove("hidden");
         return;
       }
 
       if (guests > venue.maxGuests) {
-        guestInput.value = venue.maxGuests;
         guestError.textContent = `Maximum ${venue.maxGuests} guests allowed.`;
         guestError.classList.remove("hidden");
         return;
@@ -294,6 +331,12 @@ async function loadVenue() {
     </div>
     `;
   }
+}
+
+function toBookingDate(date) {
+  return new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  ).toISOString();
 }
 
 loadVenue();

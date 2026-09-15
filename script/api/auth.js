@@ -18,3 +18,12 @@ export function login({ email, password }) {
     body: JSON.stringify({ email, password }),
   });
 }
+
+export function createApiKey() {
+  return apiFetch("auth/create-api-key", {
+    method: "POST",
+    body: JSON.stringify({
+      name: "Holidaze",
+    }),
+  });
+}

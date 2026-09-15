@@ -1,5 +1,5 @@
-import { login } from "../api/auth.js";
-import { setToken, setProfile } from "../utils/storage.js";
+import { login, createApiKey } from "../api/auth.js";
+import { setToken, setProfile, setApiKey } from "../utils/storage.js";
 
 const loginMount = document.getElementById("loginMount");
 
@@ -105,6 +105,9 @@ loginForm.addEventListener("submit", async (event) => {
 
     setToken(user.accessToken);
     setProfile(user);
+
+    const apiKeyResponse = await createApiKey();
+    setApiKey(apiKeyResponse.data.key);
 
     window.location.href = "./index.html";
   } catch (error) {
