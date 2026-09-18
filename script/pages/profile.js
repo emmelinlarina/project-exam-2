@@ -3,6 +3,7 @@ import { renderFooter } from "../components/footer.js";
 import { requireAuth } from "../utils/guard.js";
 import { updateProfile } from "../api/profiles.js";
 import { setProfile } from "../utils/storage.js";
+import { getProfileBookings } from "../api/bookings.js";
 
 renderHeader();
 renderFooter();
@@ -65,6 +66,26 @@ function renderProfile(profile) {
             class="text-gray-600">${profile.bio || "No bio yet"}</p>
       </div>
     </section>
+
+    ${
+      !profile.venueManager
+        ? `
+    <section class="mt-8">
+        <div class="mb-4">
+            <h2 class="text-2xl font-bold">My Bookings</h2>
+            <p class="text-sm text-gray-dark">
+              Your upcoming stays
+            </p>
+        </div>
+
+        <div
+            id="bookingsContainer"
+            class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+        ></div>
+    </section>
+    `
+        : ""
+    }
 
     <div
       id="editProfileModal"
@@ -172,7 +193,100 @@ function mountProfile() {
 
   mount.innerHTML = renderProfile(auth.profile);
 }
+
 mountProfile();
+
+async function loadBookings() {
+  if (!auth || auth.profile.venueManager) return;
+
+  const bookingsContainer = document.getElementById("bookingsContainer");
+
+  bookingsContainer.innerHTML = `
+    <p class="col-span-full text-sm text-gray-dark">
+    Loading bookings...
+    </p>    
+    `;
+
+  try {
+    const response = await getProfileBookings(auth.profile.name);
+    const bookings = response.data;
+
+    const today = new Date();
+
+    const upcomingBookings = bookings
+      .filter((booking) => new Date(booking.dateFrom) >= today)
+      .sort((a, b) => new Date(a.dateFrom) - new Date(b.dateFrom));
+
+    if (upcomingBookings.length === 0) {
+      bookingsContainer.innerHTML = `
+      <div class="col-span-full rounded-3xl border border-accent-brown bg-white p-8 text-center">
+        <h3 class="text-lg font-semibold">No upcoming bookings</h3>
+        <p class="mt-1 text-sm text-gray-dark">Your future stays will appear here.
+        </p>
+      </div>
+      `;
+      return;
+    }
+
+    bookingsContainer.innerHTML = upcomingBookings
+      .map((booking) => renderBookingCard(booking))
+      .join("");
+  } catch (error) {
+    console.error("Failed to load bookings:", error);
+
+    bookingsContainer.innerHTML = `
+    <div class="col-span-full rounded-3xl border border-accent-brown bg-white p-8 text-center">
+    <h3 class="font-semibold">Failed to load bookings</h3>
+      <p class="mt-1 text-sm text-gray-dark">
+      Please try again later.
+      </p>    
+    </div>
+    `;
+  }
+}
+
+function renderBookingCard(booking) {
+  const venue = booking.venue;
+
+  const dateFrom = new Date(booking.dateFrom).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  const dateTo = new Date(booking.dateTo).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  return `
+    <article class="overflow-hidden rounded-3xl border border-accent-brown bg-white">
+        <img 
+            src="${venue?.media?.[0]?.url || "assets/images/fallback.jpg"}" 
+            alt="${venue?.media?.[0]?.alt || venue?.name || "Venue"}"
+            class="w-full h-48 object-cover"
+            onerror="this.onerror=null; this.src='assets/images/fallback.jpg';"
+        />
+        <div class="p-4">
+            <h3 class="text-lg font-semibold">
+            ${venue?.name}
+            </h3>
+
+            <p class="text-sm text-gray-600">
+            ${dateFrom} - ${dateTo}
+            </p>
+
+            <p class="mt-1 text-sm text-gray-dark">
+            ${booking.guests} ${booking.guests === 1 ? "guest" : "guests"}
+            </p>
+        </div>
+    </article>
+    `;
+}
+
+loadBookings();
+
 const editProfileButton = document.getElementById("editProfileButton");
 const editProfileModal = document.getElementById("editProfileModal");
 const closeEditProfile = document.getElementById("closeEditProfile");
