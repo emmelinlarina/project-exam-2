@@ -11,3 +11,9 @@ export async function getVenue(id) {
 export function searchVenues(query) {
   return apiFetch(`holidaze/venues/search?q=${encodeURIComponent(query)}`);
 }
+
+export function getProfileVenues(name) {
+  return apiFetch(
+    `holidaze/profiles/${encodeURIComponent(name)}/venues?_bookings=true`,
+  );
+}

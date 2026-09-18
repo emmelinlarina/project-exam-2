@@ -4,6 +4,7 @@ import { requireAuth } from "../utils/guard.js";
 import { updateProfile } from "../api/profiles.js";
 import { setProfile } from "../utils/storage.js";
 import { getProfileBookings } from "../api/bookings.js";
+import { renderManagedVenues } from "../components/managedVenues.js";
 
 renderHeader();
 renderFooter();
@@ -84,7 +85,31 @@ function renderProfile(profile) {
         ></div>
     </section>
     `
-        : ""
+        : `
+    <section class="mt-8">
+        <div class="mb-4 flex items-center justify-between">
+        <div>
+            <h2 class="text-2xl font-bold">Managed Venues</h2>
+            <p class="text-sm text-gray-dark">
+              Your venues
+            </p>
+        </div>
+
+        <button
+          type="button"
+          id="createVenueButton"
+          class="rounded-full bg-accent-blue px-5 py-2.5 text-sm font-semibold text-white"
+        >
+          Create Venue
+        </button>
+        </div>
+
+        <div
+            id="managedVenuesContainer"
+            class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+        ></div>
+    </section>
+    `
     }
 
     <div
@@ -195,6 +220,10 @@ function mountProfile() {
 }
 
 mountProfile();
+
+if (auth?.profile?.venueManager) {
+  renderManagedVenues(auth.profile);
+}
 
 async function loadBookings() {
   if (!auth || auth.profile.venueManager) return;
