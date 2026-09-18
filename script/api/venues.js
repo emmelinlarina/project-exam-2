@@ -17,3 +17,10 @@ export function getProfileVenues(name) {
     `holidaze/profiles/${encodeURIComponent(name)}/venues?_bookings=true`,
   );
 }
+
+export function createVenue(venueData) {
+  return apiFetch("holidaze/venues", {
+    method: "POST",
+    body: JSON.stringify(venueData),
+  });
+}
