@@ -2,12 +2,46 @@ import { renderHeader } from "../components/header.js";
 import { renderFooter } from "../components/footer.js";
 import { requireVenueManager } from "../utils/guard.js";
 import { venueForm } from "../components/venueForm.js";
-import { createVenue } from "../api/venues.js";
+import { createVenue, getVenue, editVenue } from "../api/venues.js";
 
 renderHeader();
 renderFooter();
 
 const profile = requireVenueManager();
+const params = new URLSearchParams(window.location.search);
+const venueId = params.get("id");
+const isEditing = Boolean(venueId);
+
+async function loadVenueEdit(form) {
+  if (!isEditing) return;
+
+  try {
+    const response = await getVenue(venueId);
+    const venue = response.data;
+    if (venue.owner?.name !== profile.name) {
+      window.location.href = "./profile.html";
+      return;
+    }
+
+    form.elements.name.value = venue.name || "";
+    form.elements.description.value = venue.description || "";
+    form.elements.price.value = venue.price || "";
+    form.elements.maxGuests.value = venue.maxGuests || "";
+    form.elements.media.value = venue.media?.[0]?.url || "";
+
+    form.elements.wifi.checked = venue.meta?.wifi || false;
+    form.elements.parking.checked = venue.meta?.parking || false;
+    form.elements.breakfast.checked = venue.meta?.breakfast || false;
+    form.elements.pets.checked = venue.meta?.pets || false;
+
+    form.elements.address.value = venue.location?.address || "";
+    form.elements.city.value = venue.location?.city || "";
+    form.elements.zip.value = venue.location?.zip || "";
+    form.elements.country.value = venue.location?.country || "";
+  } catch (error) {
+    console.error("Failed to load venue", error);
+  }
+}
 
 if (profile) {
   const mount = document.getElementById("manageVenuesMount");
@@ -18,11 +52,15 @@ if (profile) {
                 <div class="mb-6">
 
                 <h1 class="text-3xl font-bold">
-                    Create a New Venue
+                    ${isEditing ? "Edit Venue" : "Create a New Venue"}
                 </h1>
 
                 <p class="mt-1 text-sm text-gray-dark">
-                    Add a new venue to Holidaze.
+                    ${
+                      isEditing
+                        ? "Edit the details of your venue."
+                        : "Add a new venue to Holidaze."
+                    }
                 </p>
                 </div>
 
@@ -38,6 +76,13 @@ if (profile) {
 
       const form = document.getElementById("venueForm");
       const message = document.getElementById("venueFormMessage");
+      const submitButton = form.querySelector('button[type="submit"]');
+
+      if (isEditing) {
+        submitButton.textContent = "Update Venue";
+      }
+
+      loadVenueEdit(form);
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -77,16 +122,20 @@ if (profile) {
         console.log("Venue data:", venueData);
 
         try {
-          message.textContent = "Creating venue...";
-
-          const response = await createVenue(venueData);
-
-          message.textContent = "Venue created successfully!";
-          form.reset();
+          if (isEditing) {
+            message.textContent = "Updating venue...";
+            await editVenue(venueId, venueData);
+            message.textContent = "Venue updated successfully!";
+          } else {
+            message.textContent = "Creating venue...";
+            await createVenue(venueData);
+            message.textContent = "Venue created successfully!";
+            form.reset();
+          }
         } catch (error) {
           console.error("Error creating venue:", error);
           message.textContent =
-            error.message || "Failed to create venue. Please try again.";
+            error.message || "Failed to save venue. Please try again.";
         }
       });
     }

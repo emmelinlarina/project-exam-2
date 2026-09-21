@@ -24,3 +24,16 @@ export function createVenue(venueData) {
     body: JSON.stringify(venueData),
   });
 }
+
+export function editVenue(id, venueData) {
+  return apiFetch(`holidaze/venues/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(venueData),
+  });
+}
+
+export function deleteVenue(id) {
+  return apiFetch(`holidaze/venues/${id}`, {
+    method: "DELETE",
+  });
+}
