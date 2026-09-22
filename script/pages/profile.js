@@ -225,6 +225,14 @@ if (auth?.profile?.venueManager) {
   renderManagedVenues(auth.profile);
 }
 
+const createVenueButton = document.getElementById("createVenueButton");
+
+if (createVenueButton) {
+  createVenueButton.addEventListener("click", () => {
+    window.location.href = "./manage-venues.html";
+  });
+}
+
 async function loadBookings() {
   if (!auth || auth.profile.venueManager) return;
 
