@@ -36,15 +36,15 @@ export function renderHeader() {
 
   header.innerHTML = /*html*/ `
     <nav 
-      class="flex items-center justify-between bg-primary text-white px-4 py-3"
+      class="flex h-14 items-center justify-between bg-primary text-white px-4 md:px-8 lg:px-12"
       aria-label="Main navigation"
       >
         <a 
           href="./index.html" 
           aria-label="Holidaze home"
-          class="font-logo text-lg"
+          class="flex items-center"
           >
-          Holidaze
+          <img src="./assets/images/Holidaze_logo_w.png" alt="Holidaze logo" class="h-20 w-auto" />
        </a>
 
         <button 
