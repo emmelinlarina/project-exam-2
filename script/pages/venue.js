@@ -3,6 +3,7 @@ import { renderHeader } from "../components/header.js";
 import { renderFooter } from "../components/footer.js";
 import { venueCalendar } from "../components/venueCalendar.js";
 import { createBooking } from "../api/bookings.js";
+import { getProfile } from "../utils/storage.js";
 
 renderHeader();
 renderFooter();
@@ -265,8 +266,17 @@ async function loadVenue() {
 
     const reserveButton = document.getElementById("reserve-button");
     const bookingMessage = document.getElementById("booking-message");
+    const profile = getProfile();
+
+    if (!profile) {
+      reserveButton.textContent = "Log in to book";
+    }
 
     reserveButton.addEventListener("click", async () => {
+      if (!profile) {
+        window.location.href = "./login.html";
+        return;
+      }
       const guests = Number(guestInput.value);
 
       if (!selectedCheckIn || !selectedCheckOut) {
