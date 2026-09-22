@@ -8,7 +8,6 @@
       "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-600: oklch(44.6% 0.03 256.802);
@@ -56,7 +55,6 @@
     --color-accent-tan: #c6ac8f;
     --color-accent-cream: #d8c6b2;
     --color-gray-light: #efefef;
-    --color-gray: #a09c97;
     --color-gray-dark: #343434;
     --color-status-error: #8b5c5a;
   }
@@ -830,6 +828,10 @@
     .hover\:opacity-70:hover {
       opacity: 70%;
     }
+    .hover\:shadow-md:hover {
+      --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
   }
   .focus\:border-accent-blue:focus {
     border-color: var(--color-accent-blue);
@@ -962,6 +964,18 @@ body {
 }
 .font-logo {
   letter-spacing: 0.05em;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+a {
+  cursor: pointer;
+}
+button, a, input, select, textarea {
+  transition: all 0.2s ease;
 }
 @property --tw-scroll-snap-strictness {
   syntax: "*";

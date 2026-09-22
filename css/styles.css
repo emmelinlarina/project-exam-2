@@ -42,3 +42,23 @@ body {
 .font-logo {
   letter-spacing: 0.05em;
 }
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  cursor: pointer;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  transition: all 0.2s ease;
+}

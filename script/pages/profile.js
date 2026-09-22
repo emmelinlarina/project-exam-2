@@ -298,7 +298,9 @@ function renderBookingCard(booking) {
   });
 
   return `
-    <article class="overflow-hidden rounded-3xl border border-accent-brown bg-white">
+    <a 
+     href="./venue.html?id=${venue?.id}" 
+     class="overflow-hidden rounded-3xl border border-accent-brown bg-white transition hover:shadow-md">
         <img 
             src="${venue?.media?.[0]?.url || "assets/images/fallback.jpg"}" 
             alt="${venue?.media?.[0]?.alt || venue?.name || "Venue"}"
@@ -318,7 +320,7 @@ function renderBookingCard(booking) {
             ${booking.guests} ${booking.guests === 1 ? "guest" : "guests"}
             </p>
         </div>
-    </article>
+    </a>
     `;
 }
 
