@@ -927,6 +927,9 @@
   .text-center {
     text-align: center;
   }
+  .text-left {
+    text-align: left;
+  }
   .font-body {
     font-family: var(--font-body);
   }

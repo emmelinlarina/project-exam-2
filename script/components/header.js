@@ -14,9 +14,8 @@ export function renderHeader() {
         <a href="./register.html">Register</a>
       `
     : /*html*/ `
-        <a href="#venue-list">Venues</a>
+        <a href="./index.html">Venues</a>
         <a href="./profile.html">Profile </a>
-        <a href="./bookings.html">Bookings</a>
 
         ${
           isVenueManager
@@ -28,7 +27,7 @@ export function renderHeader() {
         
         <button
           type="button"
-          class="logout-button"
+          class="logout-button text-left uppercase"
         >
           Log out
         </button>
@@ -36,7 +35,7 @@ export function renderHeader() {
 
   header.innerHTML = /*html*/ `
     <nav 
-      class="flex h-14 items-center justify-between bg-primary text-white px-4 md:px-8 lg:px-12"
+      class="flex h-16 items-center justify-between bg-white text-primary font-semibold px-4 md:px-8 lg:px-12"
       aria-label="Main navigation"
       >
         <a 
@@ -44,13 +43,13 @@ export function renderHeader() {
           aria-label="Holidaze home"
           class="flex items-center"
           >
-          <img src="./assets/images/Holidaze_logo_w.png" alt="Holidaze logo" class="h-20 w-auto" />
+          <img src="./assets/images/Holidaze_logo_green.png" alt="Holidaze logo" class="h-20 w-auto" />
        </a>
 
         <button 
           id="menu-button"
           type="button"
-          class="flex items-center justify-center text-white text-xl md:hidden"
+          class="flex items-center justify-center text-primary   text-xl md:hidden"
           aria-label="Open navigation menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -58,7 +57,7 @@ export function renderHeader() {
             <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
 
-        <div class="hidden md:flex md:items-center md:gap-6"
+        <div class="hidden uppercase md:flex md:items-center md:gap-6"
         >
           ${navigationLinks}
 
@@ -67,7 +66,7 @@ export function renderHeader() {
 
     <div 
       id="mobile-menu" 
-      class="hidden bg-primary px-4 py-4 md:hidden"
+      class="hidden bg-primary text-white px-4 py-4 md:hidden"
       >
         <div class="flex flex-col gap-4"
         >
