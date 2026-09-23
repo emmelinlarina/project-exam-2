@@ -27,8 +27,6 @@ home.innerHTML = /*html*/ `
   <section id="why-holidaz"></section>
 `;
 
-renderHero();
-
 function renderResultsInfo(count) {
   const resultsInfo = document.getElementById("results-info");
 
@@ -64,6 +62,7 @@ async function loadVenues() {
     baseVenues = venues;
     currentVenues = venues;
 
+    renderHero(venues);
     renderPopularStays(venues);
     renderVenueList(venues);
   } catch (error) {
