@@ -959,6 +959,9 @@
     .hover\:opacity-70:hover {
       opacity: 70%;
     }
+    .hover\:opacity-80:hover {
+      opacity: 80%;
+    }
     .hover\:opacity-90:hover {
       opacity: 90%;
     }
