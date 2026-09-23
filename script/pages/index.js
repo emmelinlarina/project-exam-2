@@ -1,7 +1,6 @@
 import { renderHeader } from "../components/header.js";
 import { renderHero } from "../components/hero.js";
 import { renderPopularStays } from "../components/popularStays.js";
-import { renderMoreStays } from "../components/moreStays.js";
 import { getVenues } from "../api/venues.js";
 import { renderSearchBar } from "../components/searchBar.js";
 import { renderVenueFilters } from "../components/venueFilters.js";
@@ -21,7 +20,6 @@ const home = document.getElementById("home");
 home.innerHTML = /*html*/ `
   <section id="hero"></section>
   <section id="popular-stays"></section>
-  <section id="more-stays"></section>
   <section id="venue-search"></section>
   <section id="results-info"></section>
   <section id="venue-filters"></section>
@@ -67,7 +65,6 @@ async function loadVenues() {
     currentVenues = venues;
 
     renderPopularStays(venues);
-    renderMoreStays(venues);
     renderVenueList(venues);
   } catch (error) {
     console.error("Failed to load venues:", error);

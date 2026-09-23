@@ -19,7 +19,7 @@ export function renderPopularStays(venues) {
         id="popular-prev"
         type="button"
         aria-label="Previous popular stay"
-        class="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 
+        class="absolute left-10 top-1/2 z-10 flex h-15 w-15 -translate-y-1/2 
                items-center justify-center rounded-full bg-white shadow-md 
                transition hover:scale-105"
       >
@@ -40,7 +40,7 @@ export function renderPopularStays(venues) {
         id="popular-next"
         type="button"
         aria-label="Next popular stay"
-        class="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 
+        class="absolute right-10 top-1/2 z-10 flex h-15 w-15 -translate-y-1/2 
                items-center justify-center rounded-full bg-white shadow-md 
                transition hover:scale-105"
       >
