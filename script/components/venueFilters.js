@@ -3,8 +3,8 @@ export function renderVenueFilters(onFilterChange) {
 
   filterSection.innerHTML = /*html*/ `
     <div class="px-4 py-4 md:px-8 lg:px-12">
-        <div class="max-w-5xl">
-          <div class="flex flex-wrap items-center gap-2">
+        <div class="mx-auto max-w-5xl">
+          <div class=" flex flex-wrap items-center gap-2">
 
             <span class="mr-1 text-sm font-semibold">
                 Sort by
