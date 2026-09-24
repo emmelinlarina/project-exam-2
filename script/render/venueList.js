@@ -26,7 +26,7 @@ export function renderVenueList(
             totalPages > 1
               ? `
               <nav 
-                  class="mt-8 flex items-center justify-center gap-3"
+                  class="mt-8 mb-5 flex items-center justify-center gap-3"
                   aria-label="Venue pages"
               >
                 <button 

@@ -13,14 +13,11 @@ loginMount.innerHTML = /*html*/ `
 
 <section 
     class="min-h-screen bg-primary px-6 py-6 text-white
-           md:flex md:min-h-[600px] md:items-center md:justify-center
+           md:flex md:items-center md:justify-center
            md:px-8 md:py-16
         ">
     <div class="max-w-md w-full mx-auto
                 md:max-w-sm md:rounded-3xl md:bg-secondary md:p-8">
-
-    
-
 
         <div class="mt-8 flex items-center gap-4 md:mt-0">
             <a 
@@ -55,7 +52,7 @@ loginMount.innerHTML = /*html*/ `
                         name="login-email" 
                         autocomplete="email" 
                         required 
-                        class="w-full rounded-md border border-white/20
+                        class="w-full rounded-md border     border-white/20
                                bg-transparent px-3 py-2 text-sm text-white
                                outline-none focus:border-white" 
                     />
@@ -88,7 +85,7 @@ loginMount.innerHTML = /*html*/ `
                 aria-live="polite">
             </p>
 
-        <div class="pt-24 md:pt-20">
+        <div class="pt-24 md:pt-20 mb-20">
 
             <button 
                 type="submit" 

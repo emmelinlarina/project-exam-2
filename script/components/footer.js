@@ -2,7 +2,7 @@ export function renderFooter() {
   const footer = document.getElementById("footer");
 
   footer.innerHTML = /*html*/ `
-    <footer class="mt-16 bg-primary px-6 py-8 text-white lg:px-12">
+    <footer class="bg-primary px-6 py-8 text-white lg:px-12">
         <div 
             class="mx-auto grid max-w-5xl gap-8
                     sm:grid-cols-2 lg:grid-cols-[auto_auto_auto_auto] 
@@ -81,6 +81,8 @@ export function renderFooter() {
                     Subscribe
                   </button>
                 </div>
+              </div>
+            </div>
     </footer>
   `;
 }

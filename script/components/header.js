@@ -35,7 +35,7 @@ export function renderHeader() {
 
   header.innerHTML = /*html*/ `
     <nav 
-      class="flex h-16 items-center justify-between bg-white text-primary font-semibold px-4 md:px-8 lg:px-12"
+      class="flex h-16 items-center justify-between bg-gray-light text-primary font-semibold px-4 md:px-8 lg:px-12"
       aria-label="Main navigation"
       >
         <a 

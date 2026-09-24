@@ -1,74 +1,102 @@
 import { register } from "../api/auth.js";
+import { renderHeader } from "../components/header.js";
+import { renderFooter } from "../components/footer.js";
+
+renderHeader();
+renderFooter();
 
 const registerMount = document.getElementById("registerMount");
 
 registerMount.innerHTML = /*html*/ ` 
-<section class="min-h-screen bg-primary px-6 py-6 text-white">
-    <div class="max-w-md mx-auto">
+<section 
+    class="min-h-screen bg-primary px-6 py-6 text-white
+           md:flex  md:items-center md:justify-center
+           md:px-8 md:py-16">
 
+    <div class="max-w-md w-full mx-auto
+                md:max-w-sm md:rounded-3xl md:bg-secondary md:p-8">
+
+    <div class="mt-8 flex items-center gap-4 md:mt-0">
         <a
             href="./index.html"
-            class="inline-flex h-9 w-9 items-center justify-center rounded-full focus:outline-none focus-visible:ring focus-visible:ring-white"
-            aria-label="Back to home" 
-        >
-            <i class="fas fa-arrow-left"></i>
+            aria-label="Back to homepage"
+            class="inline-flex h-8 w-8 items-center justify-center
+                    rounded-full focus:outline-none focus-visible:ring-2
+                    focus-visible:ring-white"
+                >
+                <i class="fas fa-arrow-left"></i>
         </a>
-
-        <div class="mt-10">
             <h1 class="font-body text-2xl font-semibold">
                 Create your account
             </h1>
-
-            <form id="register-form" class="m-8 space-y-4">
+        </div>
+            
+            <form 
+                id="register-form" 
+                class="mt-12 space-y-4 md:mt-8 md:px-0">
 
                 <div>
-                    <label for="register-name" class="block text-sm font-medium">
+                    <label 
+                        for="register-name" 
+                        class="mb-1 block text-sm">
                         Username
                     </label>
 
                     <input 
-                    type="text" 
-                    id="register-name" 
-                    name="register-name" 
-                    autocomplete="username"
-                    required
-                    class="w-full rounded-md border border-white/30 bg-transparent px-3 py-2 text-sm text-white" 
-                    />
+                        type="text" 
+                        id="register-name" 
+                        name="register-name" 
+                        autocomplete="username"
+                        required
+                        class="w-full rounded-md border border-white/20
+                               bg-transparent px-3 py-2 text-sm text-white
+                               outline-none focus:border-white" 
+                        />
                 </div>
 
                 <div>
-                    <label for="register-email" class="block text-sm font-medium">
+                    <label 
+                        for="register-email" 
+                        class="mb-1 block text-sm"
+                    >
                         Email
                     </label>
 
                     <input 
-                    type="email" 
-                    id="register-email" 
-                    name="register-email"
-                    autocomplete="email"
-                    required
-                    class="w-full rounded-md border border-white/30 bg-transparent px-3 py-2 text-sm text-white" 
-                    />
+                        type="email" 
+                        id="register-email" 
+                        name="register-email"
+                        autocomplete="email"
+                        required
+                        class="w-full rounded-md border border-white/20
+                               bg-transparent px-3 py-2 text-sm text-white
+                               outline-none focus:border-white" 
+                        />
                 </div>
 
                 <div>
-                    <label for="register-password" class="block text-sm font-medium">
+                    <label 
+                        for="register-password" 
+                        class="mb-1 block text-sm"
+                    >
                         Password
                     </label>
 
                     <input 
-                    type="password" 
-                    id="register-password" 
-                    name="register-password" 
-                    autocomplete="new-password"
-                    minlength="8"
-                    required
-                    class="w-full rounded-md border border-white/30 bg-transparent px-3 py-2 text-sm text-white" 
-                    />
+                        type="password" 
+                        id="register-password" 
+                        name="register-password" 
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                        class="w-full rounded-md border border-white/20
+                                bg-transparent px-3 py-2 text-sm text-white
+                                outline-none focus:border-white" 
+                        />
                 </div>
 
                 <fieldset class="pt-2">
-                    <legend class="mb-2 text-sm font-medium">
+                    <legend class="mt-2 text-base font-medium">
                         Account type
                     </legend>
 
@@ -92,21 +120,23 @@ registerMount.innerHTML = /*html*/ `
 
                 <button
                     type="submit"
-                    class="mt-6 w-full rounded-md bg-secondary px-4 py-2 text-sm font-semibold text-white"
+                    class="mt-6 w-full rounded-md bg-secondary md:bg-primary px-4 py-2 text-sm font-semibold text-white"
                 >
                     REGISTER    
                 </button>
 
+                <p class="mt-3 text-center text-sm">
+                        Already have an account? 
+                    <a href="./login.html" class="font-semibold">
+                        LOGIN  
+                    </a>
+                </p>
+
             </form>
 
-            <p class="mt-3 text-center text-xs">
-                Already have an account? 
-                <a href="./login.html" class="font-semibold underline">
-                    LOGIN  
-                </a>
-            </p>
+            
         </div>
-    </div>
+    
 </section>
 
 `;
