@@ -2,6 +2,7 @@ import { getVenue } from "../api/venues.js";
 import { renderHeader } from "../components/header.js";
 import { renderFooter } from "../components/footer.js";
 import { venueCalendar } from "../components/venueCalendar.js";
+import { bookingConfirmModal } from "../components/bookingConfirmModal.js";
 import { createBooking } from "../api/bookings.js";
 import { getProfile } from "../utils/storage.js";
 
@@ -256,11 +257,11 @@ async function loadVenue() {
             </div>
 
             <button 
-            id="reserve-button"
-            type="button"
-            class="col-span-2 rounded-full bg-primary text-white py-2 px-4 text-sm font-semibold hover:bg-primary-dark"
-            >
-            Book Now
+              id="reserve-button"
+              type="button"
+              class="col-span-2 rounded-full bg-primary text-white py-2 px-4 text-sm font-semibold hover:bg-primary-dark"
+              >
+              Book Now
             </button>
 
             <p 
@@ -270,6 +271,8 @@ async function loadVenue() {
             aria-live="polite">
         </p>
         </aside>
+
+        ${bookingConfirmModal()}
 
       </div>                     
     </div>
@@ -300,11 +303,38 @@ async function loadVenue() {
     const bookingMessage = document.getElementById("booking-message");
     const profile = getProfile();
 
+    const confirmModal = document.getElementById("booking-confirm-modal");
+    const closeConfirmButton = document.getElementById("booking-confirm-close");
+
+    const cancelConfirmButton = document.getElementById(
+      "cancel-booking-confirm",
+    );
+
+    const confirmBookingButton = document.getElementById(
+      "confirm-booking-button",
+    );
+
+    const confirmCheckIn = document.getElementById("confirm-checkin");
+    const confirmCheckOut = document.getElementById("confirm-checkout");
+    const confirmGuests = document.getElementById("confirm-guests");
+    const confirmTotal = document.getElementById("confirm-total");
+
+    function closeConfirmModal() {
+      confirmModal.classList.add("hidden");
+      confirmModal.classList.remove("flex");
+      confirmModal.setAttribute("aria-hidden", "true");
+
+      reserveButton.focus();
+    }
+
+    closeConfirmButton.addEventListener("click", closeConfirmModal);
+    cancelConfirmButton.addEventListener("click", closeConfirmModal);
+
     if (!profile) {
       reserveButton.textContent = "Log in to book";
     }
 
-    reserveButton.addEventListener("click", async () => {
+    reserveButton.addEventListener("click", () => {
       if (!profile) {
         window.location.href = "./login.html";
         return;
@@ -322,18 +352,47 @@ async function loadVenue() {
         return;
       }
 
+      const nights = Math.round(
+        (selectedCheckOut - selectedCheckIn) / (1000 * 60 * 60 * 24),
+      );
+
+      confirmCheckIn.textContent = selectedCheckIn.toLocaleDateString("en-GB");
+      confirmCheckOut.textContent =
+        selectedCheckOut.toLocaleDateString("en-GB");
+
+      confirmGuests.textContent = guests;
+      confirmTotal.textContent = `$${nights * venue.price}`;
+
+      confirmModal.classList.remove("hidden");
+      confirmModal.classList.add("flex");
+      confirmModal.setAttribute("aria-hidden", "false");
+
+      closeConfirmButton.focus();
+    });
+
+    confirmBookingButton.addEventListener("click", async () => {
+      const guests = Number(guestInput.value);
+
       try {
-        const response = await createBooking({
+        confirmBookingButton.disabled = true;
+        confirmBookingButton.textContent = "Booking...";
+
+        await createBooking({
           dateFrom: toBookingDate(selectedCheckIn),
           dateTo: toBookingDate(selectedCheckOut),
           guests: guests,
           venueId: venue.id,
         });
 
+        closeConfirmModal();
+
         bookingMessage.textContent = "Booked!";
       } catch (error) {
         console.error("Booking failed:", error);
         bookingMessage.textContent = "Booking failed. Please try again.";
+      } finally {
+        confirmBookingButton.disabled = false;
+        confirmBookingButton.textContent = "Confirm Booking";
       }
     });
 
