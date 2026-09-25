@@ -1,82 +1,112 @@
 import { login, createApiKey } from "../api/auth.js";
 import { setToken, setProfile, setApiKey } from "../utils/storage.js";
+import { renderHeader } from "../components/header.js";
+import { renderFooter } from "../components/footer.js";
+
+renderHeader();
+renderFooter();
 
 const loginMount = document.getElementById("loginMount");
 
 loginMount.innerHTML = /*html*/ `
 
-<section class="min-h-screen bg-primary px-6 py-6 text-white">
-    <div class="max-w-md mx-auto">
 
-        <a
-            href="./index.html"
-            class="inline-flex h-9 w-9 items-center justify-center rounded-full focus:outline-none focus-visible:ring focus-visible:ring-white"
-            aria-label="Back to home" 
-            >
-            <i class="fas fa-arrow-left"></i>
+<section 
+    class="min-h-screen bg-primary px-6 py-6 text-white
+           md:flex md:items-center md:justify-center
+           md:px-8 md:py-16
+        ">
+    <div class="max-w-md w-full mx-auto
+                md:max-w-sm md:rounded-3xl md:bg-secondary md:p-8">
+
+        <div class="mt-8 flex items-center gap-4 md:mt-0">
+            <a 
+                href="./index.html" 
+                aria-label="Back to homepage"
+                class="inline-flex h-8 w-8 items-center justify-center
+                       rounded-full focus:outline-none focus-visible:ring-2
+                       focus-visible:ring-white"
+                >
+                <i class="fas fa-arrow-left"></i>
         </a>
-
-        <div class="mt-10">
             <h1 class="font-body text-2xl font-semibold">
-                Login
+                Welcome back!
             </h1>
+        </div>
 
-        <form id="login-form" class="m-8 space-y-4">
+        <form 
+            id="login-form" 
+            class="mt-12 space-y-4 md:mt-8 md:px-0">
+
             <div>
                 <label 
-                for="login-email" 
-                class="block text-sm font-medium"
-                >
-                    Email
-                </label>
+                    for="login-email" 
+                    class="mb-1 block text-sm"
+                    >
+                        Email
+                    </label>
 
-                <input 
-                type="email" 
-                id="login-email" 
-                name="login-email" 
-                autocomplete="email" 
-                required 
-                class="w-full rounded-md border border-white/30 bg-transparent px-3 py-2 text-sm text-white" />
+                    <input 
+                        type="email" 
+                        id="login-email" 
+                        name="login-email" 
+                        autocomplete="email" 
+                        required 
+                        class="w-full rounded-md border     border-white/20
+                               bg-transparent px-3 py-2 text-sm text-white
+                               outline-none focus:border-white" 
+                    />
             </div>
 
             <div>
                 <label 
-                for="login-password" 
-                class="block text-sm font-medium"
-                >
-                    Password
-                </label>
+                    for="login-password" 
+                    class="mb-1 block text-sm"
+                    >
+                        Password
+                    </label>
 
-                <input 
-                type="password" 
-                id="login-password" 
-                name="login-password" 
-                autocomplete="current-password"
-                required 
-                class="w-full rounded-md border border-white/30 bg-transparent px-3 py-2 text-sm text-white" />
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        name="login-password" 
+                        autocomplete="current-password"
+                        required 
+                        class="w-full rounded-md border border-white/20
+                               bg-transparent px-3 py-2 text-sm text-white
+                               outline-none focus:border-white" 
+                    />
             </div>
 
             <p 
                 id="login-message" 
                 class="text-xs" 
                 role="alert"
-                aria-live="polite"></p>
+                aria-live="polite">
+            </p>
+
+        <div class="pt-24 md:pt-20 mb-20">
 
             <button 
                 type="submit" 
-                class="mt-6 w-full rounded-md bg-secondary px-4 py-2 text-sm font-semibold text-white"
+                class="mt-6 w-full rounded-md bg-secondary md:bg-primary px-4 py-2
+                       text-sm font-semibold text-white"
                 >
                 LOGIN
             </button>
-        </form>
 
-        <p class="mt-3 text-center text-xs">
-            Don't have an account? 
-            <a href="./register.html" class="font-semibold underline">REGISTER</a>
-        </p>
+                <p class="mt-3 text-center text-sm">
+                    Don't have an account? 
+                    <a 
+                        href="./register.html" 
+                        class="font-semibold text-white">REGISTER
+                    </a>
+                </p>
+                </div>  
+            </form>
         </div>
-    </div>
 </section>
+
 `;
 
 const loginForm = document.getElementById("login-form");

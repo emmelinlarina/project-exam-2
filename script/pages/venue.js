@@ -30,84 +30,100 @@ async function loadVenue() {
 
     venuePage.innerHTML = /*html*/ `
         <div class="px-4 py-6 md:px-8 lg:px-12">
-            <div class="grid gap-8 lg:grid-cols-[2fr_1fr]">
+
+            <div class="mx-auto max-w-5xl grid grid-cols-1 gap-8
+                        md:grid-cols-2 md:gap-18 lg:grid-cols-5"
+            >
+            <div class="lg:col-span-3">
 
                 <div>
                     <img
                         id="main-image"
                         src="${media?.[0]?.url}" 
                         alt="${media?.[0]?.alt || venue.name}" 
-                        class="w-full h-80 rounded-3xl object-cover"
+                        class="w-full h-60 object-cover sm:h-72 lg:h-80"
                         onerror="this.onerror=null;this.src='${fallbackImage}'"
                     />
+                  
 
-                    ${
-                      media.length > 1
-                        ? `
-                        <div class="mt-4 grid grid-cols-3 gap-2">
-                              ${
-                                media
-                                  .slice(0, 3)
-                                  .map(
-                                    (item, index) => `
-                                      <button 
-                                        type="button"
-                                        class="gallery-thumb overflow-hidden rounded-xl
-                                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-blue
-                                        data-images="${item.url}"
-                                        data-alt="${item.alt || venue.name}"
-                                        aria-label="View image ${index + 1}"
-                                        >
-                                        <img
-                                          src="${item.url}"
-                                          alt="${item.alt || venue.name}"
-                                          class="w-full h-24 rounded-xl object-cover"
-                                          onerror="this.onerror=null;this.src='${fallbackImage}'"
-                                        />
-                                      </button>
-                                    `,
-                                  )
-                                  .join("") || ""
-                              }
-                            </div>`
-                        : ""
-                    }
+                 ${
+                   media.length > 1
+                     ? `
+                    <div class="mt-1 grid grid-cols-3 gap-1">
+                      ${media
+                        .slice(0, 3)
+                        .map(
+                          (item, index) => `
+                              <button 
+                                type="button"
+                                class="gallery-thumb h-28 overflow-hidden
+                                       focus:outline-none focus:ring-2 
+                                       focus:ring-offset-2 focus:ring-accent-blue"
+                                data-images="${item.url}"
+                                data-alt="${item.alt || venue.name}"
+                                aria-label="View image ${index + 1}"
+                                >
+                                <img
+                                  src="${item.url}"
+                                  alt="${item.alt || venue.name}"
+                                  class="w-full h-full object-cover
+                                         transition-transform duration-300
+                                         hover:scale-105"
+                                  onerror="this.onerror=null;this.src='${fallbackImage}'"
+                                />
+                              </button>
+                            `,
+                        )
+                        .join("")} 
+                      
+                    </div>
+                    `
+                     : ""
+                 }
+              </div>
 
-                    <div class="mt-6">
-                        <div class="flex items-start justify-between gap-4">
-                            <div>
-                                <h1 class="font-body text-2xl font-semibold">
-                                    ${venue.name}
-                                </h1>                   
-            
-                                <p class="mt-2 text-sm ">
-                                    ★ ${venue.rating}
-                                </p>
-                            </div>
+              <!-- VENUE INFO --> 
+                  <div class="mt-6">
 
-                            <p class="font-semibold text-secondary">
-                                ${venue.price} $ / night
+                    <div class="flex flex-col gap-2 sm:flex-row  sm:items-start sm:gap-4 justify-between">
+
+                      <div>
+                          <h1 class="font-body text-2xl font-semibold">
+                              ${venue.name}
+                          </h1>                   
+        
+                            <p class="mt-2 text-sm ">
+                                ★ ${venue.rating}
                             </p>
                         </div>
 
-                        <p class="mt-2 text-sm ">
-                            ${venue.location?.city || ""}
-                            ${
-                              venue.location?.country
-                                ? `, ${venue.location?.country}`
-                                : ""
-                            }
+                        <p class="font-semibold text-secondary">
+                            ${venue.price} $ / night
                         </p>
+                    </div>
 
-                        <p class="mt-2 text-sm ">
-                            Up to ${venue.maxGuests} guests
-                        </p>
+                    <div class="mt-2 flex flex-wrap items-center gap-4 text-sm">
+                    <p>
+                      <i class="fa-solid fa-location-dot mr-1"></i>
+                        ${venue.location?.city || ""}
+                        ${
+                          venue.location?.country
+                            ? `, ${venue.location?.country}`
+                            : ""
+                        }
+                    </p>
 
-                        <p class="mt-2 text-sm ">
-                            ${venue.owner.name} is hosting
-                        </p>
+                    <p>
+                      <i class="fa-solid fa-user-group mr-1"></i>
+                        Up to ${venue.maxGuests} guests
+                    </p>
+                    </div>
 
-                    <div class="my-6 border-t pt-4">
+                    
+
+                    
+
+                    <div class="my-6 border-t border-gray-light pt-4">
                         <h2 class="font-body text-xl font-semibold">
                             Description
                         </h2>
@@ -115,9 +131,12 @@ async function loadVenue() {
                         <p class="mt-2 text-sm ">
                         ${venue.description}
                         </p>
+                        
+                        
                     </div>
+                  
 
-                    <div class="my-6 border-t pt-4">
+                    <div class="my-6 border-t border-gray-300 pt-4">
                         <h2 class="font-body text-xl font-semibold">
                             Amenities
                         </h2>
@@ -155,24 +174,37 @@ async function loadVenue() {
                                 : ""
                             }
                     </div>
+                    <div class="my-6 border-t border-gray-300 pt-4">
+                    <p class="mt-2 text-sm font-bold">
+                        ${venue.owner.name} is hosting
+                    </p>
+                          </div>
                 </div>
             </div>
         </div>
+        
+
+        <!-- BOOKING CARD -->
             <aside 
-            id="booking-card"
-            class="rounded-3xl border bg-white shadow-sm p-5 lg:sticky lg:top-6 lg:self-start"
-            >
-            <h2 class="font-body text-xl font-semibold">
-                Availability
-            </h2>
+              id="booking-card"
+              class="max-w-sm mx-auto
+                     rounded-3xl border-2 border-gray-light bg-white shadow-sm p-5
+                     md:max-w-none 
+                     md:sticky md:top-6 md:self-start
+                     lg:col-span-2"
+              >
 
-            <p class="mt-2 text-sm">
-                ${venue.price} $ / night
-            </p>
+              <h2 class="font-body text-xl font-semibold">
+                  Availability
+              </h2>
 
-            <div 
-                id="venue-calendar"
-                class="mt-4 rounded-2xl border p-4"
+              <p class="mt-2 text-base font-semibold">
+                  ${venue.price} $ / night
+              </p>
+
+              <div 
+                  id="venue-calendar"
+                  class="mt-4 rounded-2xl border-2 border-gray-light p-4"
             ></div>
         
 
@@ -239,7 +271,7 @@ async function loadVenue() {
         </p>
         </aside>
 
-
+      </div>                     
     </div>
         `;
 

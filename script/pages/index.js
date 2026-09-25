@@ -1,7 +1,7 @@
+import { renderHomeSkeleton } from "../components/skeleton.js";
 import { renderHeader } from "../components/header.js";
 import { renderHero } from "../components/hero.js";
 import { renderPopularStays } from "../components/popularStays.js";
-import { renderMoreStays } from "../components/moreStays.js";
 import { getVenues } from "../api/venues.js";
 import { renderSearchBar } from "../components/searchBar.js";
 import { renderVenueFilters } from "../components/venueFilters.js";
@@ -21,7 +21,6 @@ const home = document.getElementById("home");
 home.innerHTML = /*html*/ `
   <section id="hero"></section>
   <section id="popular-stays"></section>
-  <section id="more-stays"></section>
   <section id="venue-search"></section>
   <section id="results-info"></section>
   <section id="venue-filters"></section>
@@ -29,7 +28,7 @@ home.innerHTML = /*html*/ `
   <section id="why-holidaz"></section>
 `;
 
-renderHero();
+renderHomeSkeleton();
 
 function renderResultsInfo(count) {
   const resultsInfo = document.getElementById("results-info");
@@ -66,8 +65,10 @@ async function loadVenues() {
     baseVenues = venues;
     currentVenues = venues;
 
+    renderHero(venues);
     renderPopularStays(venues);
-    renderMoreStays(venues);
+    renderSearchBar(handleSearch);
+    renderVenueFilters(handleFilters);
     renderVenueList(venues);
   } catch (error) {
     console.error("Failed to load venues:", error);
@@ -76,7 +77,7 @@ async function loadVenues() {
 
 loadVenues();
 
-renderSearchBar((search) => {
+function handleSearch(search) {
   let filteredVenues = [...allVenues];
 
   if (search.location) {
@@ -112,9 +113,9 @@ renderSearchBar((search) => {
 
   renderResultsInfo(currentVenues.length);
   renderVenueList(currentVenues);
-});
+}
 
-renderVenueFilters((filters) => {
+function handleFilters(filters) {
   const filteredVenues = [...baseVenues];
 
   if (filters.sort === "price-asc") {
@@ -129,4 +130,4 @@ renderVenueFilters((filters) => {
 
   currentVenues = filteredVenues;
   renderVenueList(currentVenues);
-});
+}

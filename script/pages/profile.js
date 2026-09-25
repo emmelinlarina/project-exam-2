@@ -22,19 +22,19 @@ if (auth) {
 function renderProfile(profile) {
   return /*html*/ `
     <section
-      class="rounded-3xl border border-accent-brown bg-white overflow-hidden"
+      class="rounded-3xl border-2 border-gray-light bg-white overflow-hidden"
     >
-      <div class="relative h-36 bg-color-gray sm:h-44">
+      <div class="relative h-48 bg-color-gray">
         <img
           id="profile-banner"
           src="${profile.banner?.url || ""}"
           alt="Profile Banner"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover "
         />
 
-        <div class="absolute bottom-0 left-6">
+        <div class="absolute bottom-0 mb-2 left-6">
           <div
-            class="w-24 h-24 rounded-full overflow-hidden border-4 border-white"
+            class="w-24 h-24 sm:h-28 sm:w-28 rounded-full overflow-hidden border-4 border-white"
           >
             <img
               id="profile-picture"
@@ -48,23 +48,23 @@ function renderProfile(profile) {
         <div class="absolute right-6 top-4">
           <button
             id="editProfileButton"
-            class="bg-accent-blue text-white px-4 py-2 rounded-lg"
+            class="bg-accent-blue text-white border-2 border-accent-white px-5 py-2 rounded-full text-sm font-semibold transition hover:opacity-90"
           >
             Edit Profile
           </button>
         </div>
       </div>
 
-      <div class="p-6 pb-6 pt-14">
-        <h1 class="text-2xl font-bold">${profile.name || ""}</h1>
+      <div class="p-6 pb-6 pt-16 sm:px-8 sm:pb-8">
+        <h1 class="text-2xl font-bold font-body">${profile.name || ""}</h1>
 
-        <p class="mt-1 text-sm text-gray-500">
+        <p class="mt-2 inline-block rounded-full bg-gray-light px-3 py-1 text-sm">
           ${profile.venueManager ? "Venue Manager" : "Customer"}
         </p>
 
         <p 
             id="profile-bio" 
-            class="text-gray-600">${profile.bio || "No bio yet"}</p>
+            class="mt-4 max-w-2xl text-sm text-gray-600">${profile.bio || "No bio yet"}</p>
       </div>
     </section>
 
@@ -121,7 +121,7 @@ function renderProfile(profile) {
       aria-hidden="true"
     >
       <div
-        class="w-full max-w-lg rounded-3xl border border-accent-brown bg-white p-6 shadow-xl"
+        class="w-full max-w-lg rounded-3xl border-2 border-gray-light bg-white p-6 shadow-xl"
       >
         <div class="flex items-start justify-between gap-4">
           <div>
@@ -137,7 +137,7 @@ function renderProfile(profile) {
           <button
             id="closeEditProfile"
             type="button"
-            class="flex h-10 w-10 items-center justify-center rounded-full bg-color-gray transition hover:opacity-70"
+            class="flex h-12 w-12 text-3xl items-center justify-center rounded-full bg-color-gray transition hover:opacity-70"
             aria-label="Close edit profile"
           >
             &times;
@@ -155,7 +155,7 @@ function renderProfile(profile) {
           name="profileBio"
           rows="4"
           placeholder="Tell us about yourself"
-          class="mt-2 w-full rounded-2xl border border-accent-brown bg-white px-4 py-3 outline-none focus:border-accent-blue focus:ring focus:ring-accent-blue/30"
+          class="mt-2 w-full rounded-2xl border-2 border-gray-light bg-white px-4 py-3 outline-none focus:border-accent-blue focus:ring focus:ring-accent-blue/30"
         >${profile.bio || ""}</textarea>
 
 
@@ -168,7 +168,7 @@ function renderProfile(profile) {
             type="url"
             name="avatarUrl"
             placeholder="Avatar URL"
-            class="mt-2 w-full rounded-2xl border border-accent-brown bg-white px-4 py-3 outline-none focus:border-accent-blue focus:ring focus:ring-accent-blue/30"
+            class="mt-2 w-full rounded-2xl border-2 border-gray-light bg-white px-4 py-3 outline-none focus:border-accent-blue focus:ring focus:ring-accent-blue/30"
           />
 
           <label for="bannerUrl" class="flex flex-col gap-2">
@@ -180,7 +180,7 @@ function renderProfile(profile) {
             type="url"
             name="bannerUrl"
             placeholder="Banner URL"
-            class="mt-2 w-full rounded-2xl border border-accent-brown bg-white px-4 py-3 outline-none focus:border-accent-blue focus:ring focus:ring-accent-blue/30"
+            class="mt-2 w-full rounded-2xl border-2 border-gray-light bg-white px-4 py-3 outline-none focus:border-accent-blue focus:ring focus:ring-accent-blue/30"
           />
           <p
             id="editProfileMessage"
@@ -193,14 +193,14 @@ function renderProfile(profile) {
             <button
               type="button"
               id="cancelEditProfile"
-              class="rounded-full border border-accent-brown bg-white px-5 py-2.5 text-sm font-semibold"
+              class="rounded-full border-2 border-gray-light bg-white px-5 py-2.5 text-sm font-semibold"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              class="rounded-full border border-accent-brown bg-accent-blue px-5 py-2.5 text-sm font-semibold text-white"
+              class="rounded-full border-2 border-gray-light bg-accent-blue px-5 py-2.5 text-sm font-semibold text-white"
             >
               Save Changes
             </button>
@@ -256,7 +256,7 @@ async function loadBookings() {
 
     if (upcomingBookings.length === 0) {
       bookingsContainer.innerHTML = `
-      <div class="col-span-full rounded-3xl border border-accent-brown bg-white p-8 text-center">
+      <div class="col-span-full rounded-3xl border-2 border-gray-light bg-white p-8 text-center">
         <h3 class="text-lg font-semibold">No upcoming bookings</h3>
         <p class="mt-1 text-sm text-gray-dark">Your future stays will appear here.
         </p>
@@ -272,7 +272,7 @@ async function loadBookings() {
     console.error("Failed to load bookings:", error);
 
     bookingsContainer.innerHTML = `
-    <div class="col-span-full rounded-3xl border border-accent-brown bg-white p-8 text-center">
+    <div class="col-span-full rounded-3xl border-2 border-gray-light bg-white p-8 text-center">
     <h3 class="font-semibold">Failed to load bookings</h3>
       <p class="mt-1 text-sm text-gray-dark">
       Please try again later.
@@ -300,7 +300,7 @@ function renderBookingCard(booking) {
   return `
     <a 
      href="./venue.html?id=${venue?.id}" 
-     class="overflow-hidden rounded-3xl border border-accent-brown bg-white transition hover:shadow-md">
+     class="overflow-hidden rounded-3xl border-2 border-gray-light bg-white transition hover:shadow-md">
         <img 
             src="${venue?.media?.[0]?.url || "assets/images/fallback.jpg"}" 
             alt="${venue?.media?.[0]?.alt || venue?.name || "Venue"}"
@@ -391,6 +391,8 @@ editProfileForm.addEventListener("submit", async (event) => {
 
     editProfileForm.reset();
     profileBio.value = bio;
+
+    closeEditProfileModal();
   } catch (error) {
     console.error("Failed to update profile", error);
 
