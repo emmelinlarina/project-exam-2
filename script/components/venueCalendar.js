@@ -5,6 +5,9 @@ export function venueCalendar(venue, onDateChange) {
   let selectedCheckIn = null;
   let selectedCheckOut = null;
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   function isBooked(date) {
     return venue.bookings?.some((booking) => {
       const bookingStart = new Date(booking.dateFrom);
@@ -40,6 +43,9 @@ export function venueCalendar(venue, onDateChange) {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
+    const isCurrentMonth =
+      year === today.getFullYear() && month === today.getMonth();
+
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -56,6 +62,8 @@ export function venueCalendar(venue, onDateChange) {
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const booked = isBooked(date);
+      const isPast = date < today;
+      const unavailable = booked || isPast;
       const inSelectedRange = isInSelectedRange(date);
 
       const isCheckIn =
@@ -66,7 +74,7 @@ export function venueCalendar(venue, onDateChange) {
         selectedCheckOut &&
         date.toDateString() === selectedCheckOut.toDateString();
 
-      const stateLabel = booked
+      const stateLabel = unavailable
         ? "Unavailable"
         : isCheckIn
           ? "Selected check-in"
@@ -80,14 +88,14 @@ export function venueCalendar(venue, onDateChange) {
             <button
                 type="button"
                 class="calendar-day flex h-8 w-8 items-center justify-center rounded-full text-sm
-                ${booked ? "bg-gray-light text-gray-400 cursor-not-allowed" : ""}
+                ${unavailable ? "bg-gray-light text-gray-400 cursor-not-allowed" : ""}
                 ${inSelectedRange ? "bg-accent-cream" : ""}
                 ${isCheckIn ? "bg-accent-blue text-white font-semibold" : ""}
                 ${isCheckOut ? " border-2 border-accent-blue text-accent-blue font-semibold" : ""}
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
 
                 data-date="${date.toISOString()}"
-                ${booked ? "disabled" : ""}
+                ${unavailable ? "disabled" : ""}
                 aria-label="${date.toDateString()}, ${stateLabel}"
                 aria-pressed="${isCheckIn || isCheckOut}"
             >
@@ -103,6 +111,7 @@ export function venueCalendar(venue, onDateChange) {
                     type="button"
                     id="prev-month"
                     aria-label="Previous Month"
+                    ${!isCurrentMonth ? "disabled" : ""}
                     class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-light
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
                 >

@@ -161,8 +161,8 @@ form.addEventListener("submit", async (event) => {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
-  if (!email.toLowerCase().endsWith("@stud.noroff.com")) {
-    message.textContent = "Email must be a @stud.noroff.com address.";
+  if (!email.toLowerCase().endsWith("@stud.noroff.no")) {
+    message.textContent = "Email must be a @stud.noroff.no address.";
     return;
   }
 
