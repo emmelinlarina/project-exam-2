@@ -82,17 +82,27 @@ registerMount.innerHTML = /*html*/ `
                         Password
                     </label>
 
-                    <input 
-                        type="password" 
-                        id="register-password" 
-                        name="register-password" 
-                        autocomplete="new-password"
-                        minlength="8"
-                        required
-                        class="w-full rounded-md border border-white/20
-                                bg-transparent px-3 py-2 text-sm text-white
-                                outline-none focus:border-white" 
-                        />
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="register-password" 
+                            name="register-password" 
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                            class="w-full rounded-md border border-white/20
+                                    bg-transparent px-3 py-2 pr-10 text-sm text-white
+                                    outline-none focus:border-white" 
+                            />
+                        <button
+                            type="button"
+                            id="toggle-password" 
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-white/70 hover:text-white"
+                            aria-label="Toggle password visibility"
+                        > 
+                                <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <fieldset class="pt-2">
@@ -131,10 +141,7 @@ registerMount.innerHTML = /*html*/ `
                         LOGIN  
                     </a>
                 </p>
-
             </form>
-
-            
         </div>
     
 </section>
@@ -146,6 +153,22 @@ const nameInput = document.getElementById("register-name");
 const emailInput = document.getElementById("register-email");
 const passwordInput = document.getElementById("register-password");
 const message = document.getElementById("register-message");
+const togglePassword = document.getElementById("toggle-password");
+
+togglePassword.addEventListener("click", () => {
+  const isHidden = passwordInput.getAttribute("type") === "password";
+
+  passwordInput.type = isHidden ? "text" : "password";
+
+  togglePassword.innerHTML = isHidden
+    ? '<i class="fa-solid fa-eye-slash"></i>'
+    : '<i class="fa-solid fa-eye"></i>';
+
+  togglePassword.setAttribute(
+    "aria-label",
+    isHidden ? "Hide password" : "Show password",
+  );
+});
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();

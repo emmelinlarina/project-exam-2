@@ -80,46 +80,37 @@ async function loadVenue() {
                  }
               </div>
 
-              <!-- VENUE INFO --> 
                   <div class="mt-6">
-
                     <div class="flex flex-col gap-2 sm:flex-row  sm:items-start sm:gap-4 justify-between">
-
                       <div>
                           <h1 class="font-body text-2xl font-semibold">
                               ${venue.name}
                           </h1>                   
-        
                             <p class="mt-2 text-sm ">
                                 ★ ${venue.rating}
                             </p>
-                        </div>
-
+                      </div>
                         <p class="font-semibold text-secondary">
                             ${venue.price} $ / night
                         </p>
                     </div>
 
                     <div class="mt-2 flex flex-wrap items-center gap-4 text-sm">
-                    <p>
-                      <i class="fa-solid fa-location-dot mr-1"></i>
-                        ${venue.location?.city || ""}
-                        ${
-                          venue.location?.country
-                            ? `, ${venue.location?.country}`
-                            : ""
-                        }
-                    </p>
+                      <p>
+                        <i class="fa-solid fa-location-dot mr-1"></i>
+                          ${venue.location?.city || ""}
+                          ${
+                            venue.location?.country
+                              ? `, ${venue.location?.country}`
+                              : ""
+                          }
+                      </p>
 
-                    <p>
-                      <i class="fa-solid fa-user-group mr-1"></i>
-                        Up to ${venue.maxGuests} guests
-                    </p>
+                      <p>
+                        <i class="fa-solid fa-user-group mr-1"></i>
+                          Up to ${venue.maxGuests} guests
+                      </p>
                     </div>
-
-                    
-
-                    
 
                     <div class="my-6 border-t border-gray-light pt-4">
                         <h2 class="font-body text-xl font-semibold">
@@ -130,9 +121,7 @@ async function loadVenue() {
                         ${venue.description}
                         </p>
                         
-                        
                     </div>
-                  
 
                     <div class="my-6 border-t border-gray-300 pt-4">
                         <h2 class="font-body text-xl font-semibold">
@@ -142,47 +131,42 @@ async function loadVenue() {
                         <div class="mt-3 flex flex-wrap gap-2">
                             ${
                               venue.meta?.wifi
-                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                ? /*html*/ `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
                                 WiFi
                                     </span>`
                                 : ""
                             }
-
                             ${
                               venue.meta?.parking
-                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                ? /*html*/ `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
                                 Parking
                                     </span>`
                                 : ""
                             }
-
                             ${
                               venue.meta?.breakfast
-                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                ? /*html*/ `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
                                 Breakfast
                                     </span>`
                                 : ""
                             }
-
                             ${
                               venue.meta?.pets
-                                ? `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
+                                ? /*html*/ `<span class="rounded-full bg-gray-light px-3 py-2 text-sm">
                                 Pets allowed
                                     </span>`
                                 : ""
                             }
                     </div>
                     <div class="my-6 border-t border-gray-300 pt-4">
-                    <p class="mt-2 text-sm font-bold">
-                        ${venue.owner.name} is hosting
-                    </p>
-                          </div>
+                      <p class="mt-2 text-sm font-bold">
+                          ${venue.owner.name} is hosting
+                      </p>
+                    </div>
                 </div>
             </div>
         </div>
         
-
-        <!-- BOOKING CARD -->
         ${renderBooking(venue)}
 
       </div>                     
@@ -206,18 +190,16 @@ async function loadVenue() {
     venuePage.innerHTML = /*html*/ `
     <div 
         class="px-4 py-10 text-center" 
-        role="alert"
-        >
-        <p class="font-semibold">
-            Failed to load venue details.
-        </p>
+        role="alert">
+        
+        <p class="font-semibold">Failed to load venue details.</p>
 
         <a
             href="./index.html"
             class="mt-3 inline-block text-sm text-primary 
-                   hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
-        >
-            Go back to homepage
+                   hover:underline focus:outline-none 
+                   focus-visible:ring-2 focus-visible:ring-accent-blue"
+        > Go back to homepage
         </a>
     </div>
     `;

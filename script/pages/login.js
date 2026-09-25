@@ -66,6 +66,8 @@ loginMount.innerHTML = /*html*/ `
                         Password
                     </label>
 
+                <div class="relative">
+
                     <input 
                         type="password" 
                         id="login-password" 
@@ -76,6 +78,16 @@ loginMount.innerHTML = /*html*/ `
                                bg-transparent px-3 py-2 text-sm text-white
                                outline-none focus:border-white" 
                     />
+
+                        <button
+                            type="button"
+                            id="toggle-password"
+                            class="absolute top-1/2 -translate-y-1/2 text-sm text-white/70 hover:text-white"
+                            aria-label="Toggle password visibility"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
             </div>
 
             <p 
@@ -113,6 +125,23 @@ const loginForm = document.getElementById("login-form");
 const emailInput = document.getElementById("login-email");
 const passwordInput = document.getElementById("login-password");
 const loginMessage = document.getElementById("login-message");
+
+const togglePassword = document.getElementById("toggle-password");
+
+togglePassword.addEventListener("click", () => {
+  const isHidden = passwordInput.getAttribute("type") === "password";
+
+  passwordInput.type = isHidden ? "text" : "password";
+
+  togglePassword.innerHTML = isHidden
+    ? '<i class="fa-solid fa-eye-slash"></i>'
+    : '<i class="fa-solid fa-eye"></i>';
+
+  togglePassword.setAttribute(
+    "aria-label",
+    isHidden ? "Hide password" : "Show password",
+  );
+});
 
 const params = new URLSearchParams(window.location.search);
 
