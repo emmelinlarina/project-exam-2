@@ -29,7 +29,7 @@ function createFeaturedCard(venue) {
               <img 
               src="${imageUrl}" 
               alt="${imageAlt}" 
-              class="h-full w-full object-cover rounded-3xl border-2 border-accent-brown"
+              class="h-full w-full object-cover rounded-3xl border-2 border-gray-light"
               >
             `
           : `

@@ -75,10 +75,15 @@ export function renderPopularStays(venues) {
   }
 
   function scrollToActiveCard(behavior = "smooth") {
-    cards[activeIndex]?.scrollIntoView({
+    const card = cards[activeIndex];
+    if (!card) return;
+
+    const scrollLeft =
+      card.offsetLeft - carousel.clientWidth / 2 + card.clientWidth / 2;
+
+    carousel.scrollTo({
+      left: scrollLeft,
       behavior,
-      inline: "center",
-      block: "nearest",
     });
 
     updateActiveCard();

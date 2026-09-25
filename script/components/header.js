@@ -9,7 +9,7 @@ export function renderHeader() {
 
   const navigationLinks = !isLoggedIn
     ? /*html*/ `
-        <a href="#venue-list">Venues</a>
+        <a href="./index.html">Venues</a>
         <a href="./login.html">Log in</a>
         <a href="./register.html">Register</a>
       `

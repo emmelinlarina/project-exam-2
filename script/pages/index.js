@@ -1,3 +1,4 @@
+import { renderHomeSkeleton } from "../components/skeleton.js";
 import { renderHeader } from "../components/header.js";
 import { renderHero } from "../components/hero.js";
 import { renderPopularStays } from "../components/popularStays.js";
@@ -26,6 +27,8 @@ home.innerHTML = /*html*/ `
   <section id="venue-list"></section>
   <section id="why-holidaz"></section>
 `;
+
+renderHomeSkeleton();
 
 function renderResultsInfo(count) {
   const resultsInfo = document.getElementById("results-info");
@@ -64,6 +67,8 @@ async function loadVenues() {
 
     renderHero(venues);
     renderPopularStays(venues);
+    renderSearchBar(handleSearch);
+    renderVenueFilters(handleFilters);
     renderVenueList(venues);
   } catch (error) {
     console.error("Failed to load venues:", error);
@@ -72,7 +77,7 @@ async function loadVenues() {
 
 loadVenues();
 
-renderSearchBar((search) => {
+function handleSearch(search) {
   let filteredVenues = [...allVenues];
 
   if (search.location) {
@@ -108,9 +113,9 @@ renderSearchBar((search) => {
 
   renderResultsInfo(currentVenues.length);
   renderVenueList(currentVenues);
-});
+}
 
-renderVenueFilters((filters) => {
+function handleFilters(filters) {
   const filteredVenues = [...baseVenues];
 
   if (filters.sort === "price-asc") {
@@ -125,4 +130,4 @@ renderVenueFilters((filters) => {
 
   currentVenues = filteredVenues;
   renderVenueList(currentVenues);
-});
+}
