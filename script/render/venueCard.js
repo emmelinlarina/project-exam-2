@@ -6,8 +6,10 @@ export function createVenueCard(venue, variant = "standard") {
   return createStandardCard(venue);
 }
 
+const fallbackImage = "./assets/images/fallback.jpg";
+
 function createFeaturedCard(venue) {
-  const imageUrl = venue.media?.[0]?.url;
+  const imageUrl = venue.media?.[0]?.url || fallbackImage;
   const imageAlt = venue.media?.[0]?.alt || venue.name;
 
   const venueName = venue.name?.trim() || "Unknown Venue";
@@ -30,6 +32,8 @@ function createFeaturedCard(venue) {
               <img 
               src="${imageUrl}" 
               alt="${imageAlt}" 
+              loading="lazy"
+              onerror="this.onerror=null; this.src='${fallbackImage}'"
               class="h-full w-full object-cover rounded-3xl border-2 border-gray-light"
               >
             `
@@ -73,10 +77,13 @@ function createFeaturedCard(venue) {
 }
 
 function createStandardCard(venue) {
-  const imageUrl = venue.media?.[0]?.url;
+  const imageUrl = venue.media?.[0]?.url || fallbackImage;
   const imageAlt = venue.media?.[0]?.alt || venue.name;
 
   const venueName = venue.name?.trim() || "Unknown Venue";
+  const city = venue.location?.city?.trim() || "";
+  const country = venue.location?.country?.trim() || "";
+  const location = [city, country].filter(Boolean).join(", ");
 
   return /*html*/ `
   
@@ -93,6 +100,8 @@ function createStandardCard(venue) {
           ? `<img 
                 src="${imageUrl}" 
                 alt="${imageAlt}" 
+                loading="lazy"
+                onerror="this.onerror=null; this.src='${fallbackImage}'"
                 class="h-40 w-full object-cover shrink-0">
            `
           : `<div class="h-40 w-full shrink-0 bg-gray-light"></div>`
