@@ -12,12 +12,15 @@ const params = new URLSearchParams(window.location.search);
 const venueId = params.get("id");
 const isEditing = Boolean(venueId);
 
-async function loadVenueEdit(form) {
+async function loadVenueEdit(form, showMessage) {
   if (!isEditing) return;
+
+  showMessage("Loading venue...", "info");
 
   try {
     const response = await getVenue(venueId);
     const venue = response.data;
+
     if (venue.owner?.name !== profile.name) {
       window.location.href = "./profile.html";
       return;
@@ -38,8 +41,13 @@ async function loadVenueEdit(form) {
     form.elements.city.value = venue.location?.city || "";
     form.elements.zip.value = venue.location?.zip || "";
     form.elements.country.value = venue.location?.country || "";
+
+    const message = document.getElementById("venueFormMessage");
+    message.classList.add("invisible");
+    message.textContent = "";
   } catch (error) {
-    console.error("Failed to load venue", error);
+    console.error("Failed to load venue.", error);
+    showMessage("Failed to load venue. Please try again.", "error");
   }
 }
 
@@ -107,7 +115,7 @@ if (profile) {
         submitButton.textContent = "Update Venue";
       }
 
-      loadVenueEdit(form);
+      loadVenueEdit(form, showVenueFormMessage);
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -143,8 +151,6 @@ if (profile) {
             country: formData.get("country"),
           },
         };
-
-        console.log("Venue data:", venueData);
 
         try {
           if (isEditing) {

@@ -3,6 +3,8 @@ import { getProfileVenues, deleteVenue } from "../api/venues.js";
 export async function renderManagedVenues(profile) {
   if (!profile?.venueManager) return;
 
+  const fallbackImage = "./assets/images/fallback.jpg";
+
   const container = document.getElementById("managedVenuesContainer");
 
   if (!container) return;
@@ -33,7 +35,7 @@ export async function renderManagedVenues(profile) {
     if (venues.length > 0) {
       container.innerHTML = venues
         .map((venue) => {
-          const image = venue.media?.[0]?.url || "";
+          const image = venue.media?.[0]?.url || fallbackImage;
 
           const upcomingBookings =
             venue.bookings?.filter(
@@ -47,6 +49,7 @@ export async function renderManagedVenues(profile) {
                   src="${image}" 
                   alt="${venue.name || ""}" 
                   class="w-full h-48 object-cover"
+                  onerror="this.onerror=null;this.src='${fallbackImage}'"
                 />
 
                 <div class="p-5 text-gray-dark">
