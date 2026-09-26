@@ -451,6 +451,9 @@
   .h-full {
     height: 100%;
   }
+  .h-px {
+    height: 1px;
+  }
   .min-h-90 {
     min-height: calc(var(--spacing) * 90);
   }

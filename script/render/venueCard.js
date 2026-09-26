@@ -77,9 +77,6 @@ function createStandardCard(venue) {
   const imageAlt = venue.media?.[0]?.alt || venue.name;
 
   const venueName = venue.name?.trim() || "Unknown Venue";
-  const city = venue.location?.city?.trim() || "";
-  const country = venue.location?.country?.trim() || "";
-  const location = [city, country].filter(Boolean).join(", ");
 
   return /*html*/ `
   
