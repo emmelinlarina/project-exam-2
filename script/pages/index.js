@@ -80,6 +80,21 @@ async function loadVenues() {
 loadVenues();
 
 function handleSearch(search) {
+  const hasSearchCriteria =
+    search.location ||
+    search.checkIn ||
+    search.checkOut ||
+    Number(search.guests) > 1;
+
+  if (!hasSearchCriteria) {
+    baseVenues = allVenues;
+    currentVenues = allVenues;
+
+    document.getElementById("results-info").innerHTML = "";
+    renderVenueList(currentVenues);
+    return;
+  }
+
   let filteredVenues = [...allVenues];
 
   if (search.location) {
@@ -99,8 +114,10 @@ function handleSearch(search) {
   }
 
   if (search.guests) {
+    const guests = Number(search.guests);
+
     filteredVenues = filteredVenues.filter(
-      (venue) => venue.maxGuests >= search.guests,
+      (venue) => venue.maxGuests >= guests,
     );
   }
 
