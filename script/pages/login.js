@@ -93,7 +93,7 @@ loginMount.innerHTML = /*html*/ `
 
             <p 
                 id="login-message" 
-                class="text-xs" 
+                class="text-xs invisible min-h-9 rounded-xl px-4 py-2 font-medium text-white" 
                 role="alert"
                 aria-live="polite">
             </p>
@@ -127,6 +127,22 @@ const emailInput = document.getElementById("login-email");
 const passwordInput = document.getElementById("login-password");
 const loginMessage = document.getElementById("login-message");
 
+function showLoginMessage(message, type = "error") {
+  loginMessage.textContent = message;
+
+  loginMessage.classList.remove(
+    "invisible",
+    "bg-status-error",
+    "bg-status-success",
+  );
+
+  if (type === "success") {
+    loginMessage.classList.add("bg-status-success");
+  } else {
+    loginMessage.classList.add("bg-status-error");
+  }
+}
+
 const togglePassword = document.getElementById("toggle-password");
 
 togglePassword.addEventListener("click", () => {
@@ -147,12 +163,13 @@ togglePassword.addEventListener("click", () => {
 const params = new URLSearchParams(window.location.search);
 
 if (params.get("registered") === "true") {
-  loginMessage.textContent = "Registration successful. You can now log in.";
+  showLoginMessage("Registration successful. You can now log in.", "success");
 }
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  loginMessage.classList.add("invisible");
   loginMessage.textContent = "";
 
   try {
@@ -173,7 +190,9 @@ loginForm.addEventListener("submit", async (event) => {
   } catch (error) {
     console.error("Login failed:", error);
 
-    loginMessage.textContent =
-      "Login failed. Please check your email and password.";
+    showLoginMessage(
+      "Login failed. Please check your email and password.",
+      "error",
+    );
   }
 });

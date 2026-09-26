@@ -81,7 +81,7 @@ export function renderBooking(venue) {
 
         <p 
             id="booking-message" 
-            class="mt-3 text-sm"
+            class="mt-3 text-sm invisible min-h-9 w-fit rounded-xl px-4 py-2 font-medium text-white"
             role="status"
             aria-live="polite">
         </p>
@@ -105,7 +105,30 @@ export function setupBooking(venue) {
 
   const reserveButton = document.getElementById("reserve-button");
   const bookingMessage = document.getElementById("booking-message");
+
+  function showBookingMessage(text, type = "error") {
+    bookingMessage.textContent = text;
+
+    bookingMessage.classList.remove(
+      "invisible",
+      "bg-status-error",
+      "bg-status-success",
+    );
+
+    if (type === "success") {
+      bookingMessage.classList.add("bg-status-success");
+      setTimeout(() => {
+        bookingMessage.classList.add("invisible");
+        bookingMessage.textContent = "";
+      }, 3000);
+    } else {
+      bookingMessage.classList.add("bg-status-error");
+    }
+  }
+
   const profile = getProfile();
+
+  const isVenueManager = profile?.venueManager === true;
 
   const confirmModal = document.getElementById("booking-confirm-modal");
   const closeConfirmButton = document.getElementById("booking-confirm-close");
@@ -134,6 +157,10 @@ export function setupBooking(venue) {
 
   if (!profile) {
     reserveButton.textContent = "Log in to book";
+  } else if (isVenueManager) {
+    reserveButton.textContent = "Customers only";
+    reserveButton.disabled = true;
+    reserveButton.classList.add("cursor-not-allowed", "opacity-50");
   }
 
   reserveButton.addEventListener("click", () => {
@@ -144,13 +171,18 @@ export function setupBooking(venue) {
     const guests = Number(guestInput.value);
 
     if (!selectedCheckIn || !selectedCheckOut) {
-      bookingMessage.textContent =
-        "Please select check-in and check-out dates.";
+      showBookingMessage(
+        "Please select check-in and check-out dates.",
+        "error",
+      );
       return;
     }
 
     if (guests < 1 || guests > venue.maxGuests) {
-      bookingMessage.textContent = `Number of guests must be between 1 and ${venue.maxGuests}.`;
+      showBookingMessage(
+        `Number of guests must be between 1 and ${venue.maxGuests}.`,
+        "error",
+      );
       return;
     }
 
@@ -187,10 +219,10 @@ export function setupBooking(venue) {
 
       closeConfirmModal();
 
-      bookingMessage.textContent = "Booked!";
+      showBookingMessage("Booking confirmed!", "success");
     } catch (error) {
       console.error("Booking failed:", error);
-      bookingMessage.textContent = "Booking failed. Please try again.";
+      showBookingMessage("Booking failed. Please try again.", "error");
     } finally {
       confirmBookingButton.disabled = false;
       confirmBookingButton.textContent = "Confirm Booking";

@@ -184,7 +184,7 @@ function renderProfile(profile) {
           />
           <p
             id="editProfileMessage"
-            class="mt-2 text-sm"
+            class="mt-4 invisible min-h-9 w-fit rounded-xl px-4 py-2 font-medium text-white text-sm"
             role="status"
             aria-live="polite"
           ></p>
@@ -335,10 +335,41 @@ const editProfileForm = document.getElementById("editProfileForm");
 const avatarUrl = document.getElementById("avatarUrl");
 const bannerUrl = document.getElementById("bannerUrl");
 const editProfileMessage = document.getElementById("editProfileMessage");
+
+function showEditProfileMessage(text, type = "error") {
+  editProfileMessage.textContent = text;
+
+  editProfileMessage.classList.remove(
+    "invisible",
+    "bg-status-error",
+    "bg-status-success",
+    "bg-status-info",
+  );
+
+  if (type === "success") {
+    editProfileMessage.classList.add("bg-status-success");
+
+    setTimeout(() => {
+      editProfileMessage.classList.add("invisible");
+      editProfileMessage.textContent = "";
+    }, 3000);
+  } else if (type === "info") {
+    editProfileMessage.classList.add("bg-status-info");
+  } else {
+    editProfileMessage.classList.add("bg-status-error");
+  }
+}
+
 const profileBio = document.getElementById("profileBio");
 
 function openEditProfile() {
   editProfileMessage.textContent = "";
+  editProfileMessage.classList.add("invisible");
+
+  avatarUrl.value = auth.profile.avatar?.url || "";
+  bannerUrl.value = auth.profile.banner?.url || "";
+  profileBio.value = auth.profile.bio || "";
+
   editProfileModal.classList.remove("hidden");
   editProfileModal.classList.add("flex");
   editProfileModal.setAttribute("aria-hidden", "false");
@@ -367,7 +398,7 @@ editProfileForm.addEventListener("submit", async (event) => {
   const banner = bannerUrl.value.trim() || auth.profile.banner?.url || "";
   const bio = profileBio.value.trim();
 
-  editProfileMessage.textContent = "Saving changes...";
+  showEditProfileMessage("Saving changes...", "info");
 
   try {
     await updateProfile(auth.profile.name, {
@@ -376,14 +407,17 @@ editProfileForm.addEventListener("submit", async (event) => {
       banner: { url: banner },
     });
 
-    editProfileMessage.textContent = "Profile updated successfully!";
+    showEditProfileMessage("Profile updated successfully!", "success");
 
-    setProfile({
+    const updatedProfile = {
       ...auth.profile,
       bio,
       avatar: { url: avatar },
       banner: { url: banner },
-    });
+    };
+
+    setProfile(updatedProfile);
+    auth.profile = updatedProfile;
 
     document.getElementById("profile-picture").src = avatar;
     document.getElementById("profile-banner").src = banner;
@@ -396,7 +430,9 @@ editProfileForm.addEventListener("submit", async (event) => {
   } catch (error) {
     console.error("Failed to update profile", error);
 
-    editProfileMessage.textContent =
-      error?.message || "Failed to update profile.";
+    showEditProfileMessage(
+      error?.message || "Failed to update profile.",
+      "error",
+    );
   }
 });

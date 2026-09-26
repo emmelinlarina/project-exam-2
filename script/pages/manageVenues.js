@@ -12,12 +12,15 @@ const params = new URLSearchParams(window.location.search);
 const venueId = params.get("id");
 const isEditing = Boolean(venueId);
 
-async function loadVenueEdit(form) {
+async function loadVenueEdit(form, showMessage) {
   if (!isEditing) return;
+
+  showMessage("Loading venue...", "info");
 
   try {
     const response = await getVenue(venueId);
     const venue = response.data;
+
     if (venue.owner?.name !== profile.name) {
       window.location.href = "./profile.html";
       return;
@@ -38,8 +41,13 @@ async function loadVenueEdit(form) {
     form.elements.city.value = venue.location?.city || "";
     form.elements.zip.value = venue.location?.zip || "";
     form.elements.country.value = venue.location?.country || "";
+
+    const message = document.getElementById("venueFormMessage");
+    message.classList.add("invisible");
+    message.textContent = "";
   } catch (error) {
-    console.error("Failed to load venue", error);
+    console.error("Failed to load venue.", error);
+    showMessage("Failed to load venue. Please try again.", "error");
   }
 }
 
@@ -76,13 +84,38 @@ if (profile) {
 
       const form = document.getElementById("venueForm");
       const message = document.getElementById("venueFormMessage");
+
+      function showVenueFormMessage(text, type = "error") {
+        message.textContent = text;
+
+        message.classList.remove(
+          "invisible",
+          "bg-status-error",
+          "bg-status-success",
+          "bg-status-info",
+        );
+
+        if (type === "success") {
+          message.classList.add("bg-status-success");
+
+          setTimeout(() => {
+            message.classList.add("invisible");
+            message.textContent = "";
+          }, 3000);
+        } else if (type === "info") {
+          message.classList.add("bg-status-info");
+        } else {
+          message.classList.add("bg-status-error");
+        }
+      }
+
       const submitButton = form.querySelector('button[type="submit"]');
 
       if (isEditing) {
         submitButton.textContent = "Update Venue";
       }
 
-      loadVenueEdit(form);
+      loadVenueEdit(form, showVenueFormMessage);
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -119,23 +152,23 @@ if (profile) {
           },
         };
 
-        console.log("Venue data:", venueData);
-
         try {
           if (isEditing) {
-            message.textContent = "Updating venue...";
+            showVenueFormMessage("Updating venue...", "info");
             await editVenue(venueId, venueData);
-            message.textContent = "Venue updated successfully!";
+            showVenueFormMessage("Venue updated successfully!", "success");
           } else {
-            message.textContent = "Creating venue...";
+            showVenueFormMessage("Creating venue...", "info");
             await createVenue(venueData);
-            message.textContent = "Venue created successfully!";
+            showVenueFormMessage("Venue created successfully!", "success");
             form.reset();
           }
         } catch (error) {
-          console.error("Error creating venue:", error);
-          message.textContent =
-            error.message || "Failed to save venue. Please try again.";
+          console.error("Failed to save venue:", error);
+          showVenueFormMessage(
+            error.message || "Failed to save venue. Please try again.",
+            "error",
+          );
         }
       });
     }
