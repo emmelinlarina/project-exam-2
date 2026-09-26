@@ -17,7 +17,7 @@ loginMount.innerHTML = /*html*/ `
            md:px-8 md:py-16
         ">
     <div class="max-w-md w-full mx-auto
-                md:max-w-sm md:rounded-3xl md:bg-secondary md:p-8">
+                md:max-w-sm md:rounded-3xl md:bg-primary md:border-2 md:border-white/40 md:p-8">
 
         <div class="mt-8 flex items-center gap-4 md:mt-0">
             <a 
@@ -52,7 +52,7 @@ loginMount.innerHTML = /*html*/ `
                         name="login-email" 
                         autocomplete="email" 
                         required 
-                        class="w-full rounded-md border     border-white/20
+                        class="w-full rounded-md border-2 border-white/20
                                bg-transparent px-3 py-2 text-sm text-white
                                outline-none focus:border-white" 
                     />
@@ -74,7 +74,7 @@ loginMount.innerHTML = /*html*/ `
                         name="login-password" 
                         autocomplete="current-password"
                         required 
-                        class="w-full rounded-md border border-white/30
+                        class="w-full rounded-md border-2 border-white/30
                                bg-transparent px-3 py-2 text-sm text-white
                                outline-none focus:border-white" 
                     />
@@ -102,10 +102,10 @@ loginMount.innerHTML = /*html*/ `
 
             <button 
                 type="submit" 
-                class="mt-6 w-full rounded-md bg-secondary md:bg-primary px-4 py-2
-                       text-sm font-semibold text-white"
+                class="mt-6 w-full rounded-md bg-white text-primary
+                       px-4 py-2 text-lg font-semibold hover:bg-gray-light hover:text-black"
                 >
-                LOGIN
+                    LOGIN
             </button>
 
                 <p class="mt-3 text-center text-sm">
