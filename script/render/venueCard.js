@@ -17,7 +17,8 @@ function createFeaturedCard(venue) {
 
   return /*html*/ `
   <article 
-    class="featured-card relative h-75 w-60 shrink-0 snap-center overflow-visible rounded-3xl bg-gray-light">
+    class="featured-card relative h-75 w-60 shrink-0 
+           snap-center overflow-visible rounded-3xl bg-gray-light">
     <a 
       href="./venue.html?id=${venue.id}"
       class="block h-full w-full rounded-3xl focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-brown"
@@ -47,26 +48,21 @@ function createFeaturedCard(venue) {
                  transition-opacity duration-300"
           >
         <h3 
-            class="truncate font-body font-semibold text-sm text-black">
-          ${venueName}
+            class="truncate font-body font-semibold text-base text-black"
+            title="${venueName}"
+          >
+          ${venueName} ★ ${venue.rating}
         </h3>
 
-        ${
-          location
-            ? `
-          <p class="mt-1 truncate text-xs whitespace-nowrap text-black font-bold">
-          ${location}
-          </p>`
-            : ""
-        }
+        
 
         
       <p class="mt-1 text-xs whitespace-nowrap text-black font-bold"
         >
-          ★ ${venue.rating}
+          
         </p> 
         
-        <p class="mt-auto text-base whitespace-nowrap text-secondary font-bold"
+        <p class="mt-auto text-lg whitespace-nowrap text-secondary font-bold"
         >
         ${venue.price} $ / night
       </p>

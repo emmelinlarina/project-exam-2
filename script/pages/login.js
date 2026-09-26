@@ -74,7 +74,7 @@ loginMount.innerHTML = /*html*/ `
                         name="login-password" 
                         autocomplete="current-password"
                         required 
-                        class="w-full rounded-md border border-white/20
+                        class="w-full rounded-md border border-white/30
                                bg-transparent px-3 py-2 text-sm text-white
                                outline-none focus:border-white" 
                     />
@@ -82,7 +82,8 @@ loginMount.innerHTML = /*html*/ `
                         <button
                             type="button"
                             id="toggle-password"
-                            class="absolute top-1/2 -translate-y-1/2 text-sm text-white/70 hover:text-white"
+                            class="absolute top-1/2 px-3 -translate-y-1/2 text-sm text-white/70 hover:text-white"
+                            style="right: 10px;"
                             aria-label="Toggle password visibility"
                         >
                             <i class="fa-solid fa-eye"></i>

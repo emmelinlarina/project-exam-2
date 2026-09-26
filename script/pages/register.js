@@ -98,6 +98,7 @@ registerMount.innerHTML = /*html*/ `
                             type="button"
                             id="toggle-password" 
                             class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-white/70 hover:text-white"
+                            style="right: 10px;"
                             aria-label="Toggle password visibility"
                         > 
                                 <i class="fa-solid fa-eye"></i>
