@@ -48,7 +48,7 @@ if (profile) {
 
   if (mount) {
     mount.innerHTML = /*html*/ `
-            <section class="mx-auto max-w-3xl">
+            <section class="mx-auto max-w-3xl mt-6">
                 <div class="mb-6">
 
                 <h1 class="text-3xl font-bold">

@@ -2,7 +2,7 @@ export function venueForm() {
   return /*html*/ `
         <form 
             id="venueForm"
-            class="rounded-3xl border border-accent-brown bg-white p-6"
+            class="rounded-3xl border border-accent-brown bg-white p-6 mb-6"
         >
         <div class="grid gap-5">
 
@@ -17,7 +17,7 @@ export function venueForm() {
                     name="name" 
                     required
                     placeholder="Enter venue name"
-                    class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                    class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                 />
             </div>
 
@@ -34,7 +34,7 @@ export function venueForm() {
                     required
                     rows="5"
                     placeholder="Describe your venue"
-                    class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                    class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                 ></textarea>
             </div>
 
@@ -50,7 +50,7 @@ export function venueForm() {
                     name="price" 
                     min="0"
                     required
-                    class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                    class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                 />
             </div>
 
@@ -65,7 +65,7 @@ export function venueForm() {
                     name="maxGuests" 
                     min="1"
                     required
-                    class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                    class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                 />
             </div>
         </div>
@@ -80,7 +80,7 @@ export function venueForm() {
                     id="venueMedia" 
                     name="media" 
                     placeholder="Enter venue media URL"
-                    class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                    class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                 />
             </div>
 
@@ -90,20 +90,20 @@ export function venueForm() {
                 </h2>
 
                 <div class="flex flex-wrap gap-4">
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="wifi" />
+                    <label class="flex items-center space-x-2 gap-1 cursor-pointer">
+                        <input type="checkbox" name="wifi" class="h-4 w-4 accent-gray cursor-pointer" />
                         WiFi
                     </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="parking" />
+                    <label class="flex items-center space-x-2 gap-1 cursor-pointer">
+                        <input type="checkbox" name="parking" class="h-4 w-4 accent-gray cursor-pointer" />
                         Parking
                     </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="breakfast" />
+                    <label class="flex items-center space-x-2 gap-1 cursor-pointer">
+                        <input type="checkbox" name="breakfast" class="h-4 w-4 accent-gray cursor-pointer" />
                         Breakfast
                     </label>
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="pets" />
+                    <label class="flex items-center space-x-2 gap-1 cursor-pointer">
+                        <input type="checkbox" name="pets" class="h-4 w-4 accent-gray cursor-pointer" />
                         Pets
                     </label>
                 </div>
@@ -124,7 +124,7 @@ export function venueForm() {
                             type="text" 
                             placeholder="Enter venue address"
                             required
-                            class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                            class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                         />
                     </div>
 
@@ -139,7 +139,7 @@ export function venueForm() {
                             type="text" 
                             placeholder="Enter venue city"
                             required
-                            class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                            class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                         />
                     </div>
 
@@ -154,7 +154,7 @@ export function venueForm() {
                             type="text" 
                             placeholder="Enter venue zip code"
                             required
-                            class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                            class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                         />
                     </div>
 
@@ -169,7 +169,7 @@ export function venueForm() {
                             type="text" 
                             placeholder="Enter venue country"
                             required
-                            class="mt-2 w-full rounded-2xl border border-accent-brown px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                            class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                         />
                     </div>
                 </div>
@@ -181,10 +181,10 @@ export function venueForm() {
                     aria-live="polite"
                 ></p>
 
-                <div class="flex justify-end">
+                <div class="flex justify-center mt-6">
                     <button
                         type="submit"
-                        class="rounded-full bg-accent-blue px-6 py-3 text-sm font-semibold text-white focus:outline-none focus:ring focus:ring-accent-brown focus:ring-opacity-50"
+                        class="rounded-full bg-accent-blue px-6 py-3 text-base font-semibold text-white focus:outline-none focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                     >
                         Create Venue
                     </button>

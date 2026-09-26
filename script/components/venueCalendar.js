@@ -111,7 +111,7 @@ export function venueCalendar(venue, onDateChange) {
                     type="button"
                     id="prev-month"
                     aria-label="Previous Month"
-                    ${!isCurrentMonth ? "disabled" : ""}
+                    ${isCurrentMonth ? "disabled" : ""}
                     class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-light
                     focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
                 >

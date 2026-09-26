@@ -34,7 +34,7 @@ export function renderSearchBar(onSearch) {
 
           <div class="border-t border-accent-brown/20 py-4 px-5 
                       md:border md:border-t-0
-                      lg:border-1-0 lg:border-r">
+                      lg:border-t-0 lg:border-r">
 
             <label 
               for="search-check-in" 
@@ -51,7 +51,7 @@ export function renderSearchBar(onSearch) {
 
         <div class="border-t border-accent-brown/20 py-4 px-5 
                     md:border
-                    lg:border-1-0 lg:border-r lg:border-t-0">
+                    lg:border-t-0 lg:border-r">
                     
           <label 
             for="search-check-out" 
@@ -68,7 +68,7 @@ export function renderSearchBar(onSearch) {
 
         <div class="border-t border-accent-brown/20 py-4 px-5 
                     md:border
-                    lg:border-1-0 lg:border-r lg:border-t-0">
+                    lg:border-t-0 lg:border-r">
 
           <label 
               for="search-guests" 
@@ -82,6 +82,7 @@ export function renderSearchBar(onSearch) {
             type="number" 
             min="1"
             value="1" 
+            step="1"
             class="w-full bg-transparent text-sm text-black outline-none"
           />
         </div>
