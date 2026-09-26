@@ -53,7 +53,7 @@ function renderResultsInfo(count) {
       <p class="whitespace-nowrap text-sm font-medium">
         ${count} ${count === 1 ? "stay" : "stays"} found
       </p>
-      
+      </div>
     </div>
   `;
 }
@@ -74,6 +74,32 @@ async function loadVenues() {
     renderVenueList(venues);
   } catch (error) {
     console.error("Failed to load venues:", error);
+
+    home.innerHTML = `
+      <div class="px-4 py-16 text-center md:px-8 lg:px-12" role="alert">
+        <p class="font-body text-lg font-semibold">
+          Failed to load venues.
+        </p>
+
+        <p class="mt-2 text-sm">
+          Please try again later.
+        </p>
+
+        <button
+          type="button"
+          id="retry-button"
+          class="mt-4 rounded-xl bg-accent-blue px-5 py-2
+           text-white text-sm font-semibold
+              hover:opacity-80 focus:outline-none focus-visible:ring-2
+              focus-visible:ring-accent-blue"
+        > Try again
+        </button>
+      </div>
+    `;
+
+    document
+      .getElementById("retry-button")
+      .addEventListener("click", () => window.location.reload());
   }
 }
 
