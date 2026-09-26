@@ -36,7 +36,7 @@ function renderResultsInfo(count) {
   if (count === 0) {
     resultsInfo.innerHTML = /*html*/ `
     <div class="px-4 py-6 text-center md:px-8 lg:px-12">
-      <p class="font-medium">
+      <p class="font-body text-lg font-semibold">
         No stays found.
       </p>
       <p class="mt-1 text-sm">
@@ -49,9 +49,11 @@ function renderResultsInfo(count) {
 
   resultsInfo.innerHTML = /*html*/ `
     <div class="px-4 pt-4 md:px-8 lg:px-12">
-      <p class="text-sm font-medium">
+      <div class="mx-auto max-w-5xl">
+      <p class="whitespace-nowrap text-sm font-medium">
         ${count} ${count === 1 ? "stay" : "stays"} found
       </p>
+      
     </div>
   `;
 }
