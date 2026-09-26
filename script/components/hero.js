@@ -20,7 +20,7 @@ export function renderHero(venues) {
             (image, index) => `
               <img
                 src="${image.url}"
-                alt="${image.alt}"
+                alt=""
                 class="hero-image absolute inset-0 h-full w-full
                        scale-105
                        object-cover transition-opacity duration-1000
@@ -30,7 +30,7 @@ export function renderHero(venues) {
           )
           .join("")}
 
-        <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/15 to-black/5"
+        <div class="absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/20"
              aria-hidden="true">
         </div>
 

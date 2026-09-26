@@ -10,7 +10,7 @@ const fallbackImage = "./assets/images/fallback.jpg";
 
 function createFeaturedCard(venue) {
   const imageUrl = venue.media?.[0]?.url || fallbackImage;
-  const imageAlt = venue.name?.trim() || venue.name;
+  const imageAlt = venue.name?.trim() || "Venue";
 
   const venueName = venue.name?.trim() || "Unknown Venue";
   const city = venue.location?.city?.trim() || "";
@@ -53,7 +53,7 @@ function createFeaturedCard(venue) {
           >
         <h3 
             class="truncate font-body font-semibold text-base text-black"
-            title="${venueName}"
+            
           >
           ${venueName} ★ ${venue.rating}
         </h3>
@@ -71,7 +71,7 @@ function createFeaturedCard(venue) {
 
 function createStandardCard(venue) {
   const imageUrl = venue.media?.[0]?.url || fallbackImage;
-  const imageAlt = venue.name?.trim() || venue.name;
+  const imageAlt = venue.name?.trim() || "Venue";
 
   const venueName = venue.name?.trim() || "Unknown Venue";
   const city = venue.location?.city?.trim() || "";
