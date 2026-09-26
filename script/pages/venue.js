@@ -90,7 +90,7 @@ async function loadVenue() {
                                 ★ ${venue.rating}
                             </p>
                       </div>
-                        <p class="font-semibold text-secondary">
+                        <p class="font-semibold text-primary">
                             ${venue.price} $ / night
                         </p>
                     </div>

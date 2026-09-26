@@ -10,7 +10,7 @@ const fallbackImage = "./assets/images/fallback.jpg";
 
 function createFeaturedCard(venue) {
   const imageUrl = venue.media?.[0]?.url || fallbackImage;
-  const imageAlt = venue.media?.[0]?.alt || venue.name;
+  const imageAlt = venue.name?.trim() || venue.name;
 
   const venueName = venue.name?.trim() || "Unknown Venue";
   const city = venue.location?.city?.trim() || "";
@@ -59,14 +59,7 @@ function createFeaturedCard(venue) {
         </h3>
 
         
-
-        
-      <p class="mt-1 text-xs whitespace-nowrap text-black font-bold"
-        >
-          
-        </p> 
-        
-        <p class="mt-auto text-lg whitespace-nowrap text-secondary font-bold"
+        <p class="mt-auto text-lg whitespace-nowrap text-primary font-bold"
         >
         ${venue.price} $ / night
       </p>
@@ -78,7 +71,7 @@ function createFeaturedCard(venue) {
 
 function createStandardCard(venue) {
   const imageUrl = venue.media?.[0]?.url || fallbackImage;
-  const imageAlt = venue.media?.[0]?.alt || venue.name;
+  const imageAlt = venue.name?.trim() || venue.name;
 
   const venueName = venue.name?.trim() || "Unknown Venue";
   const city = venue.location?.city?.trim() || "";
@@ -110,7 +103,7 @@ function createStandardCard(venue) {
       <div class="flex flex-1 flex-col p-3">
         <h3 
           class="font-body font-semibold text-sm text-black line-clamp-1"
-          title="${venueName}"
+          
         >
           ${venueName}
       </h3>
@@ -118,7 +111,7 @@ function createStandardCard(venue) {
         ${
           location
             ? `<p class="mt-1 text-xs text-black line-clamp-1"
-            title="${location}"
+            
             >${location}
           </p>`
             : ""
@@ -130,7 +123,7 @@ function createStandardCard(venue) {
                 ★ ${venue.rating}
             </p> 
 
-            <p class="text-xs text-secondary font-bold"
+            <p class="text-xs text-primary font-bold"
               >
                 ${venue.price} $ / night
           </p>
