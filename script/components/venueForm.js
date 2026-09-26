@@ -78,7 +78,8 @@ export function venueForm() {
                 <input 
                     type="url" 
                     id="venueMedia" 
-                    name="media" 
+                    name="media"
+                    required
                     placeholder="Enter venue media URL"
                     class="mt-2 w-full rounded-2xl border-2 border-gray-light px-4 py-3 outline-none focus:border-accent-brown focus:ring focus:ring-accent-brown focus:ring-opacity-50"
                 />
@@ -176,7 +177,7 @@ export function venueForm() {
 
                 <p
                     id="venueFormMessage"
-                    class="text-sm"
+                    class="text-sm invisible min-h-9 w-fit mt-4 rounded-xl px-4 py-2 font-medium text-white" 
                     role="status"
                     aria-live="polite"
                 ></p>

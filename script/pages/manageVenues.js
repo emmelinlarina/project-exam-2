@@ -76,6 +76,31 @@ if (profile) {
 
       const form = document.getElementById("venueForm");
       const message = document.getElementById("venueFormMessage");
+
+      function showVenueFormMessage(text, type = "error") {
+        message.textContent = text;
+
+        message.classList.remove(
+          "invisible",
+          "bg-status-error",
+          "bg-status-success",
+          "bg-status-info",
+        );
+
+        if (type === "success") {
+          message.classList.add("bg-status-success");
+
+          setTimeout(() => {
+            message.classList.add("invisible");
+            message.textContent = "";
+          }, 3000);
+        } else if (type === "info") {
+          message.classList.add("bg-status-info");
+        } else {
+          message.classList.add("bg-status-error");
+        }
+      }
+
       const submitButton = form.querySelector('button[type="submit"]');
 
       if (isEditing) {
@@ -123,19 +148,21 @@ if (profile) {
 
         try {
           if (isEditing) {
-            message.textContent = "Updating venue...";
+            showVenueFormMessage("Updating venue...", "info");
             await editVenue(venueId, venueData);
-            message.textContent = "Venue updated successfully!";
+            showVenueFormMessage("Venue updated successfully!", "success");
           } else {
-            message.textContent = "Creating venue...";
+            showVenueFormMessage("Creating venue...", "info");
             await createVenue(venueData);
-            message.textContent = "Venue created successfully!";
+            showVenueFormMessage("Venue created successfully!", "success");
             form.reset();
           }
         } catch (error) {
-          console.error("Error creating venue:", error);
-          message.textContent =
-            error.message || "Failed to save venue. Please try again.";
+          console.error("Failed to save venue:", error);
+          showVenueFormMessage(
+            error.message || "Failed to save venue. Please try again.",
+            "error",
+          );
         }
       });
     }

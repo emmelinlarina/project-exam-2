@@ -124,7 +124,7 @@ registerMount.innerHTML = /*html*/ `
 
                 <p
                     id="register-message"
-                    class="text-xs"
+                    class="text-xs invisible min-h-9 rounded-xl px-4 py-2 font-medium text-white"
                     role="alert"
                     aria-live="polite"
                 ></p>
@@ -154,6 +154,19 @@ const nameInput = document.getElementById("register-name");
 const emailInput = document.getElementById("register-email");
 const passwordInput = document.getElementById("register-password");
 const message = document.getElementById("register-message");
+
+function showRegisterMessage(text, type = "error") {
+  message.textContent = text;
+
+  message.classList.remove("invisible", "bg-status-error", "bg-status-success");
+
+  if (type === "success") {
+    message.classList.add("bg-status-success");
+  } else {
+    message.classList.add("bg-status-error");
+  }
+}
+
 const togglePassword = document.getElementById("toggle-password");
 
 togglePassword.addEventListener("click", () => {
@@ -174,6 +187,7 @@ togglePassword.addEventListener("click", () => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  message.classList.add("invisible");
   message.textContent = "";
 
   const accountType = document.querySelector(
@@ -186,12 +200,12 @@ form.addEventListener("submit", async (event) => {
   const password = passwordInput.value;
 
   if (!email.toLowerCase().endsWith("@stud.noroff.no")) {
-    message.textContent = "Email must be a @stud.noroff.no address.";
+    showRegisterMessage("Email must be a @stud.noroff.no address.", "error");
     return;
   }
 
   if (password.length < 8) {
-    message.textContent = "Password must be at least 8 characters.";
+    showRegisterMessage("Password must be at least 8 characters.", "error");
     return;
   }
 
@@ -208,11 +222,15 @@ form.addEventListener("submit", async (event) => {
     console.error("Registration failed", error);
 
     if (error.message.includes("Profile already exists")) {
-      message.textContent =
-        "An account with this username or email already exists.";
+      showRegisterMessage(
+        "An account with this username or email already exists.",
+        "error",
+      );
     } else {
-      message.textContent =
-        "Registration failed. Please try check your information and try again.";
+      showRegisterMessage(
+        "Registration failed. Please try check your information and try again.",
+        "error",
+      );
     }
   }
 });
