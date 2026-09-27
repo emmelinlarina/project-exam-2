@@ -47,6 +47,14 @@ AI was used as a learning and support tool throughout the project. Suggestions a
 
 ---
 
+## September 2026
+
+**Tool used:** ChatGPT  
+**Purpose:** Rubberducking / problem solving: Used AI to discuss how I could approach the booking calendar and availability logic, including how booked date ranges from the API could be handled.
+**Outcome:** This discussion helped me break the problem into smaller steps and better understand the logic needed for the calendar. I then implemented and adapted the solution to the structure of my project and tested the functionality.
+
+---
+
 ## 25–26 September 2026
 
 **Tool used:** ChatGPT  

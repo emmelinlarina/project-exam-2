@@ -10,6 +10,33 @@ The application allows users to browse and search for venues, view availability 
 
 [View Holidaze](https://emmelinlarina.github.io/project-exam-2/)
 
+## Demo Accounts
+
+These accounts are created exclusively for testing this project.
+The credentials below are intentionally public.
+
+### Venue Manager
+
+**Email:** ManagerVannflaske@stud.noroff.no
+**Demo Password:** Test1234
+
+The Venue Manager account can be used to test venue creation, editing and deletion, as well as viewing bookings for owned venues.
+
+### Customer
+
+**Email:** Vannflaske@stud.noroff.no
+**Demo Password:** Test1234
+
+The Customer account can be used to test booking functionality, view upcoming bookings and manage profile information.
+
+### Create Your Own Account
+
+You can also create your own account through the registration page.
+
+- Email must use a `@stud.noroff.no` address.
+- Password must be at least 8 characters.
+- You can register as either a Customer or Venue Manager.
+
 ## Features
 
 ### All Users
@@ -83,10 +110,10 @@ npm run build
 
 ## Project Resources
 
-- [GitHub Project Board](ADD_LINK)
-- [Figma Style Guide](ADD_LINK)
-- [Figma Prototype](ADD_LINK)
-- [Gantt Chart](ADD_LINK)
+- [GitHub Project Board](https://github.com/users/emmelinlarina/projects/20/views/1)
+- [Figma Style Guide](https://www.figma.com/design/C1c9K523K11kmQCzJRHY3E/Project-Exam-2---HOLIDAZE?node-id=1-73&t=Uk9Yjla0QNrHWmlN-1)
+- [Figma Prototype](https://www.figma.com/design/C1c9K523K11kmQCzJRHY3E/Project-Exam-2---HOLIDAZE?node-id=1-147&t=Uk9Yjla0QNrHWmlN-1)
+- [Gantt Chart](https://github.com/users/emmelinlarina/projects/20/views/4)
 
 ## Testing
 
@@ -94,7 +121,7 @@ The project was tested throughout development using:
 
 - Manual testing of the main user flows
 - Chrome DevTools
-- Lighthouse
+- Lighthouse (going back for more testing)
 - WAVE
 - HTML Validator
 - Responsive testing across different screen sizes

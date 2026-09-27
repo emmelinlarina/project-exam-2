@@ -88,7 +88,7 @@ async function loadVenue() {
                   <div class="mt-6">
                     <div class="flex flex-col gap-2 sm:flex-row  sm:items-start sm:gap-4 justify-between">
                       <div>
-                          <h1 class="font-body text-2xl font-semibold">
+                          <h1 class="font-heading text-2xl font-semibold">
                               ${venue.name}
                           </h1>                   
                             <p class="mt-2 text-sm ">
