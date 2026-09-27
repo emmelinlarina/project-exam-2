@@ -47,7 +47,7 @@ export function renderHero(venues) {
                   Discover your next stay
               </p>
 
-            <h1 class="font-body font-semibold text-xl leading-tight
+            <h1 class="font-heading font-semibold text-xl leading-tight
                     md:text-4xl lg:text-5xl">
               Go somewhere. <br>
               Stay awhile.

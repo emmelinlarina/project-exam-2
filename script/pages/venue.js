@@ -21,6 +21,11 @@ async function loadVenue() {
   try {
     const response = await getVenue(id);
     const venue = response.data;
+
+    const city = venue.location?.city || "";
+    const country = venue.location?.country || "";
+    const location = [city, country].filter(Boolean).join(", ");
+
     const fallbackImage = "./assets/images/fallback.jpg";
     const media = venue.media?.length
       ? venue.media
@@ -83,7 +88,7 @@ async function loadVenue() {
                   <div class="mt-6">
                     <div class="flex flex-col gap-2 sm:flex-row  sm:items-start sm:gap-4 justify-between">
                       <div>
-                          <h1 class="font-body text-2xl font-semibold">
+                          <h1 class="font-heading text-2xl font-semibold">
                               ${venue.name}
                           </h1>                   
                             <p class="mt-2 text-sm ">
@@ -96,15 +101,17 @@ async function loadVenue() {
                     </div>
 
                     <div class="mt-2 flex flex-wrap items-center gap-4 text-sm">
+                      ${
+                        location
+                          ? `
                       <p>
                         <i class="fa-solid fa-location-dot mr-1"></i>
-                          ${venue.location?.city || ""}
-                          ${
-                            venue.location?.country
-                              ? `, ${venue.location?.country}`
-                              : ""
-                          }
+                          ${location}
                       </p>
+                      `
+                          : ""
+                      }
+
 
                       <p>
                         <i class="fa-solid fa-user-group mr-1"></i>

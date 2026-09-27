@@ -55,8 +55,8 @@ function renderProfile(profile) {
         </div>
       </div>
 
-      <div class="p-6 pb-6 pt-16 sm:px-8 sm:pb-8">
-        <h1 class="text-2xl font-bold font-body">${profile.name || ""}</h1>
+      <div class="p-6 pb-6 sm:px-8 sm:pb-8">
+        <h1 class="text-2xl font-bold font-heading">${profile.name || ""}</h1>
 
         <p class="mt-2 inline-block rounded-full bg-gray-light px-3 py-1 text-sm">
           ${profile.venueManager ? "Venue Manager" : "Customer"}
