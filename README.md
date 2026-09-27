@@ -1,6 +1,6 @@
 # Holidaze
 
-![Holidaze](assets/images/Holidaze_logo_w.png)
+<img src="assets/images/Holidaze_logo_w.png" alt="Holidaze logo" width="200">
 
 Holidaze is an accommodation booking application developed for Project Exam 2 at Noroff.
 
